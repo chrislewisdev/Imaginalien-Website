@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<title>Work In Progress</title>
+		<?php //session_start(); ?>
 	</head>
 	<body>
 		<p>
@@ -10,8 +11,15 @@
 			
 			try
 			{
-				create_account('cl_myles@hotmail.com', 'Chris Lewis', 'abc123');
-				echo "All went well.";
+				if (!login("cl_myles@hotmail.com", "abc123"))
+				{
+					echo "Login failed.";
+				}
+				logout();
+				
+				echo "ID: ". get_user_id() . "<br />";
+				echo "Email: " . get_user_email() . "<br />";
+				echo "Name: " . get_user_name() . "<br />";
 			}
 			catch (AccountException $e)
 			{

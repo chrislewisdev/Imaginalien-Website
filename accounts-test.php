@@ -1,8 +1,8 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>Work In Progress</title>
-		<?php //session_start(); ?>
 	</head>
 	<body>
 		<p>
@@ -11,11 +11,10 @@
 			
 			try
 			{
-				if (!login("cl_myles@hotmail.com", "abc123"))
+				/*if (!login("cl_myles@hotmail.com", "abc123"))
 				{
 					echo "Login failed.";
-				}
-				logout();
+				}*/
 				
 				echo "ID: ". get_user_id() . "<br />";
 				echo "Email: " . get_user_email() . "<br />";

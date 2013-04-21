@@ -10,6 +10,7 @@
 		<?php
 			require_once("admin-functions.php");
 			
+			
 			//For every pending submission, output a thumbnail with a link to the photo's moderation page
 			$counter = 0;
 			foreach (retrieve_submissions() as $submission)
@@ -19,7 +20,9 @@
 				//for each entry. It's ugly! But it's handy, since you get to layout your HTML nicely rather than echo-ing HTML strings.
 			?>
 				<div>
-					<img src="nothing.jpg" width="100" height="100" alt="<?php echo $submission->caption; ?>" /><br />
+					<a href="./moderate-photo.php?id=<?php echo $submission->id; ?>">
+						<img src="nothing.jpg" width="100" height="100" alt="<?php echo $submission->caption; ?>" />
+					</a><br />
 					<?php echo $submission->caption; ?>
 				</div>
 			<?php	

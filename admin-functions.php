@@ -96,14 +96,42 @@ function retrieve_submission($id)
 }
 
 /**
- * Updates the approval status of the specified submission.
- * @param $id Database ID of the submission to update.
- * @param $status The new status to set for the submission- 'P', 'A', or 'F'
- * @return true if the update succeeded, false if not.
+ * Convenience function to approve a submission.
+ * @param $id ID of the submission to approve.
+ * @param $score Final score to set for the submission.
+ * @param $caption Final caption to set for the submission.
+ * @return true if successful, false otherwise.
  */
-function update_submission_approval($id, $status)
+function approve_submission($id, $score, $caption)
+{
+	//return (update_submission_approval($id, 'A') and update_submission_score($id, $score));
+	
+	$connection = connect();
+	$status = 'A';
+	
+	$update = $connection->prepare("UPDATE ima_submissions SET status = ?, score = ?, caption = ? WHERE id = ?");
+	$update->bind_param("sisi", $status, $score, $caption, $id);
+	$update->execute();
+	
+	if ($update->affected_rows == 0)
+		$result = false;
+	else
+		$result = true;
+	
+	$connection->close();
+	
+	return $result;
+}
+
+/**
+ * Convenience function to reject a submission.
+ * @param $id ID of the submission to reject.
+ * @return true if successful, false otherwise.
+ */
+function reject_submission($id)
 {
 	$connection = connect();
+	$status = 'F';
 	
 	$update = $connection->prepare("UPDATE ima_submissions SET status = ? WHERE id = ?");
 	$update->bind_param("si", $status, $id);
@@ -117,50 +145,5 @@ function update_submission_approval($id, $status)
 	$connection->close();
 	
 	return $result;
-}
-
-/**
- * Updates the score of the specified submission.
- * @param $id Database ID of the submission to update.
- * @param $score The score to set for the submission.
- * @return true if the update succeeded, false if not.
- */
-function update_submission_score($id, $score)
-{
-	$connection = connect();
-	
-	$update = $connection->prepare("UPDATE ima_submissions SET score = ? WHERE id = ?");
-	$update->bind_param("si", $score, $id);
-	$update->execute();
-	
-	if ($update->affected_rows == 0)
-		$result = false;
-	else
-		$result = true;
-	
-	$connection->close();
-	
-	return $result;
-}
-
-/**
- * Convenience function to approve a submission. Calls update_submission_approval and update_submission_score.
- * @param $id ID of the submission to approve.
- * @param $score Final score to set for the submission.
- * @return see update_submission_approval.
- */
-function approve_submission($id, $score)
-{
-	return (update_submission_approval($id, 'A') and update_submission_score($id, $score));
-}
-
-/**
- * Convenience function to reject a submission. Calls update_submission_approval.
- * @param $id ID of the submission to reject.
- * @return see update_submission_approval.
- */
-function reject_submission($id)
-{
-	return update_submission_approval($id, 'F');
 }
 ?>

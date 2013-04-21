@@ -78,7 +78,7 @@ function create_account($email, $displayName, $password)
 }
 
 /** 
- * Retrieves full account info, identified by the specified e-mail.
+ * Retrieves full account info, identified by the specified e-mail or ID.
  * @param $email Email of the account to retrieve.
  * @param $id The ID of the account to retrieve. If this is specified, email will be ignored.
  * @return An Account object holding the DB info for the account.
@@ -178,16 +178,26 @@ function get_user_id()
 }
 
 /**
- * Convenience function to return the name of the currently logged in user.
+ * Convenience function to return the name of the currently logged in user, or if an ID is specified, the user with that ID.
+ * @param $id Optional ID to retrieve the name of a specific user.
  * @return The name of the current user as a string.
  * @throws AccountException if no-one is logged in.
  */
-function get_user_name()
+function get_user_name($id = -1)
 {
-	if (!is_user_logged_in()) throw new AccountException("Can't retrieve display name when no-one is logged in.");
-	else 
+	//If no ID was specified, get the ID of the current user
+	if ($id == -1)
 	{
-		return $_SESSION['imaginal_user_name'];
+		if (!is_user_logged_in()) throw new AccountException("Can't retrieve display name when no-one is logged in.");
+		else 
+		{
+			return $_SESSION['imaginal_user_name'];
+		}
+	}
+	else
+	{
+		$account = retrieve_account('not needed', $id);
+		return $account->name;
 	}
 }
 
@@ -196,18 +206,23 @@ function get_user_name()
  * @return The email of the current user.
  * @throws AccountException if no-one is logged in.
  */
-function get_user_email()
+function get_user_email($id = -1)
 {
-	if (!is_user_logged_in()) throw new AccountException("Can't retrieve user email when no-one is logged in.");
-	else
+	if ($id == -1)
 	{
-		$account = retrieve_account('not needed', get_user_id());
-		
-		//TODO: Decrypt the stored email
-		$decrypedEmail = $account->email;
-		
-		return $decrypedEmail;
+		if (!is_user_logged_in()) throw new AccountException("Can't retrieve user email when no-one is logged in.");
+		else 
+		{
+			$id = get_user_id();
+		}
 	}
+	
+	$account = retrieve_account('not needed', get_user_id());
+	
+	//TODO: Decrypt the stored email
+	$decrypedEmail = $account->email;
+	
+	return $decrypedEmail;
 }
 
 /**

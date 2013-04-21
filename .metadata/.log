@@ -1,0 +1,9 @@
+!SESSION 2013-04-21 15:22:35.645 -----------------------------------------------
+eclipse.buildId=3.4.0.201304151603
+java.version=1.6.0_24
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86 -data C:\Users\Joe\Documents\GitHub\Imaginalien-Website
+
+!ENTRY org.eclipse.osgi 2 1 2013-04-21 15:39:25.414
+!MESSAGE NLS missing message: HttpServerSettingsTab_Title in: com.aptana.js.debug.ui.internal.launchConfigurations.messages

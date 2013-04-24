@@ -10,7 +10,6 @@
 		<?php
 			require_once("admin-functions.php");
 			
-			
 			//For every pending submission, output a thumbnail with a link to the photo's moderation page
 			$counter = 0;
 			foreach (retrieve_submissions() as $submission)
@@ -30,6 +29,11 @@
 			if ($counter == 0)
 			{
 				echo "Looks like there are no submissions at the moment.";
+			}
+			
+			foreach (retrieve_game_days('2013-04-10', date('Y-m-d')) as $day)
+			{
+				echo $day . '<br />';
 			}
 		?>
 		</p>

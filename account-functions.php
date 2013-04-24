@@ -242,4 +242,30 @@ function logout()
 		}
 	}
 }
+
+/**
+ * Applies a once-off adjustment to the score of the specified player. The adjustment may be positive or negative, simply pass negative values to decrease player score.
+ * @param $id The ID of the user to adjust the score of.
+ * @param $adjustment The score adjustment to apply.
+ * @return true if the operation was applied successfully, false otherwise.
+ */
+function adjust_user_score($id, $adjustment)
+{
+	$connection = connect();
+	
+	$result = true;
+	
+	$update = $connection->prepare("UPDATE ima_accounts SET total_score = total_score + ? WHERE id = ?");
+	$update->bind_param("is", $adjustment, $id);
+	$update->execute();
+	
+	if ($update->affected_rows == 0)
+	{
+		$result = false;
+	}
+	
+	$connection->close();
+	
+	return $result;
+}
 ?>

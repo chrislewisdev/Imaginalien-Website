@@ -37,6 +37,56 @@ class SubmissionRecord
 }
 
 /**
+ * Returns the length score for a given word/caption.
+ * @param $caption The string to evaluate the length of.
+ * @return The length of the caption, not counting spaces.
+ */
+function get_word_length($caption)
+{
+	$score = 0;
+	foreach (str_split($caption) as $letter)
+	{
+		if ($letter != ' ') $score++;
+	}
+	return $score;
+}
+
+/**
+ * Sets the mod_process entry in the ima_mod_status table to the specified status value. Used to signify when moderation is underway/finished.
+ * @param $status New status to set for the moderation process.
+ * @return void
+ */
+function set_moderation_status($status)
+{
+	$connection = connect();
+	
+	$update = $connection->prepare("UPDATE ima_mod_status SET status = ? WHERE name = 'mod_process'");
+	$update->bind_param("s", $status);
+	$update->execute();
+	
+	$connection->close();
+}
+
+/**
+ * Retrieves the current moderation status from the database (Not In Process or Underway).
+ * @return A string denoting the current moderation status.
+ */
+function get_moderation_status()
+{
+	$connection = connect();
+	
+	$select = $connection->prepare("SELECT status FROM ima_mod_status WHERE name = 'mod_process'");
+	$select->bind_result($status);
+	$select->execute();
+	$select->store_result();
+	$select->fetch();
+	
+	$connection->close();
+	
+	return $status;
+}
+
+/**
  * Begins a moderation process by moving all currently Pending submissions to Undergoing Moderation.
  * @return true if the operation affected any rows, false otherwise.
  */
@@ -56,7 +106,39 @@ function begin_moderation()
 	
 	$connection->close();
 	
+	set_moderation_status('U');
+	
 	return $result;
+}
+
+/**
+ * Ends a moderation cycle by applying the approval status and score of every photo that's been moderated.
+ * @return void
+ */
+function end_moderation()
+{
+	//To start off, retrieve our list of word stats for this moderation cycle
+	$wordStats = generate_word_count_stats();
+	
+	//Then retrieve all submissions that have been staged for approval
+	$approvedSubmissions = retrieve_submissions('UA');
+	
+	//Loop through all approved submissions and process their approval, with their calculated score
+	foreach ($approvedSubmissions as $submission)
+	{
+		//A caption's score is its length, minus the no. duplicated entries- with a minimum score of 1
+		$score = max(get_word_length($submission->caption) - $wordStats[$submission->caption] + 1, 1); // + Bonus Theme Points?
+		//echo "Score for " . $submission->caption . ": " . $score . "<br />";
+		apply_approval($submission->id, $submission->accountID, $score);
+	}
+	
+	//Now, get all rejected submissions to fully apply their rejection
+	$rejectedSubmissions = retrieve_submissions('UR');
+	foreach ($rejectedSubmissions as $submission)
+	{
+		//echo "Rejected: " . $submission->caption;
+		apply_rejection($submission->id);
+	}
 }
 
 /**
@@ -159,6 +241,34 @@ function stage_submission_approval($id, $caption)
 }
 
 /**
+ * Applies full approval for a submission, including updating the score of the player.
+ * @param $id The ID of the submission to approve.
+ * @param $playerID The ID of the player who submitted this submission.
+ * @param $score The final score to set for it, and to update the player score with.
+ * @return void
+ */
+function apply_approval($id, $playerID, $score)
+{
+	$connection = connect();
+	$status = 'A';
+	
+	$update = $connection->prepare("UPDATE ima_submissions SET status = ?, score = ? WHERE id = ?");
+	$update->bind_param("sii", $status, $score, $id);
+	$update->execute();
+	
+	if ($update->affected_rows == 0)
+		$result = false;
+	else
+		$result = true;
+	
+	$connection->close();
+	
+	adjust_user_score($playerID, $score);
+	
+	return $result;
+}
+
+/**
  * Stages a submission for rejection- moves it from Underdoing Moderation to Rejected pending Application
  * @param $id ID of the submission to reject.
  * @return true if successful, false otherwise.
@@ -182,11 +292,61 @@ function stage_submission_rejection($id)
 	return $result;
 }
 
+/**
+ * Applies full rejection to a submission.
+ * @param $id The ID of the submission to reject.
+ * @return True if the operation completed successfully.
+ */
+function apply_rejection($id)
+{
+	$connection = connect();
+	$status = 'R';
+	
+	$update = $connection->prepare("UPDATE ima_submissions SET status = ? WHERE id = ?");
+	$update->bind_param("si", $status, $id);
+	$update->execute();
+	
+	if ($update->affected_rows == 0)
+		$result = false;
+	else
+		$result = true;
+	
+	$connection->close();
+	
+	return $result;
+}
+
+/**
+ * Based off of all currently staged Approved entries (during Moderation), generates a list of all used words and their usage counts.
+ * @return A dictionary where each used word is a key, and its usage count is the value.
+ */
+function generate_word_count_stats()
+{
+	$connection = connect();
+	
+	//Use SQL summary functions to retrieve the count of each word
+	$select = $connection->prepare("SELECT caption, COUNT(*) FROM ima_submissions WHERE status = 'UA' GROUP BY caption ORDER BY COUNT(*) ASC");
+	$select->bind_result($dbCaption, $dbCount);
+	$select->execute();
+	$select->store_result();
+	
+	//Once we have our results, loop through the stats array and build our dictionary of word/usage pairs
+	$stats = array();
+	while ($select->fetch())
+	{
+		$stats[$dbCaption] = $dbCount;
+	}
+	
+	$connection->close();
+	
+	return $stats;
+}
+
 $IMAGINALIEN_LAUNCH_DATE = '2013-05-06';
 /**
  * Returns a list of days on which the game was played between the two given dates.
- * @param $startDate Starting date for the game interval. Use $IMAGINALIEN_LAUNCH_DATE to get all days since the game started.
- * @param $endDate Cut-off date for day intervals. Use today's date if looking for all days since the game started until today (inclusive).
+ * @param $startDate (string, Y-m-d) Starting date for the game interval. Use $IMAGINALIEN_LAUNCH_DATE to get all days since the game started.
+ * @param $endDate (string, Y-m-d) Cut-off date for day intervals. Use today's date if looking for all days since the game started until today (inclusive).
  * @return An array of dates on which the game will have been played.
  */
 function retrieve_game_days($startDate, $endDate)
@@ -194,13 +354,16 @@ function retrieve_game_days($startDate, $endDate)
 	$gameDays = array();
 	$counter = 0;
 	
+	//Create DateTime instances to use for date arithmetic
 	$dateIterator = new DateTime($startDate);
 	$end = new DateTime($endDate);
 	$end->add(new DateInterval('P1D'));
 	
+	//Check if the end date is earlier than the start date- if it is, return our empty list
 	$diff = $dateIterator->diff($end);
 	if ($diff->format('%R') == "-") return $gameDays;
 	
+	//Loop through all days from the start date and, for each weekday, add it into the list of game days
 	do
 	{
 		$day = $dateIterator->format('D');
@@ -209,8 +372,10 @@ function retrieve_game_days($startDate, $endDate)
 			$gameDays[] = $dateIterator->format('Y-m-d');
 		}
 		$dateIterator->add(new DateInterval('P1D'));
+		
+		//Use a counter to protect against infinite loops (because I don't trust my date arithmetic enough!)
 		$counter++;
-		if ($counter > 200) return $gameDays;
+		if ($counter > 500) return $gameDays;
 	} while ($dateIterator != $end);
 	
 	return $gameDays;

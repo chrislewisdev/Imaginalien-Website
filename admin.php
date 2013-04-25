@@ -9,6 +9,7 @@
 		Here is a bunch of photos to moderate.<br />
 		<?php
 			require_once("admin-functions.php");
+			require_once("theme-functions.php");
 			
 			//For every pending submission, output a thumbnail with a link to the photo's moderation page
 			$counter = 0;
@@ -29,11 +30,6 @@
 			if ($counter == 0)
 			{
 				echo "Looks like there are no submissions at the moment.";
-			}
-			
-			foreach (retrieve_game_days('2013-04-10', date('Y-m-d')) as $day)
-			{
-				echo $day . '<br />';
 			}
 		?>
 		</p>

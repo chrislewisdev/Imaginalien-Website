@@ -8,10 +8,11 @@
 		<?php 
 			require_once("admin-functions.php");
 			
-			if (isset($_POST['mod_begin']))
+			if (isset($_POST['apply']))
 			{
-				begin_moderation();
+				end_moderation();
 			}
+			
 			$moderationStatus = get_moderation_status();
 		?>
 	</head>
@@ -36,16 +37,7 @@
 			</ul>
 		</div>
 		<div id="content">
-			<?php
-				if (output_submissions('UM') == 0)
-				{
-				?>
-					All submissions have been successfully moderated. Go to the Approval Page to complete the moderation process,
-					or if you wish to change the approval status of any photos, go to Currently Approved/Rejected Entries to see
-					all the submissions that you have already approved or rejected.
-				<?php
-				}
-			?>
+			Moderation is now complete. Good work! Take the rest of the night off.
 		</div>
 	</div>
 	</body>

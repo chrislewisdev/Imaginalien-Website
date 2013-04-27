@@ -7,12 +7,13 @@
 		<link rel="icon" type="image/ico" href="images/icon.ico"/>
 		<?php 
 			require_once("admin-functions.php");
-			
-			if (isset($_POST['mod_begin']))
-			{
-				begin_moderation();
-			}
 			$moderationStatus = get_moderation_status();
+			
+			//If a score adjustment was submitted, process it
+			if (isset($_POST['submit']))
+			{
+				$result = adjust_user_score_by_name($_POST['name'], $_POST['adjustment']);
+			}
 		?>
 	</head>
 	<body>
@@ -35,18 +36,31 @@
 				<li><a href="./all-submissions.php?date=<?php echo date('Y-m-d'); ?>">See All Submissions</a></li>
 			</ul>
 		</div>
-		<div id="content">
-			<?php
-				if (output_submissions('UM') == 0)
+	</div>
+	<div id="content">
+		<h1>Score Adjustment</h1>
+		Use this page to apply bonuses/negatives players, such as bonus points for "Photo of the Day", or negatives for players
+		who may be abusing the rules somehow.<br /><br />
+		
+		<?php
+			if (isset($_POST['submit']))
+			{
+				if ($result)
 				{
-				?>
-					All submissions have been successfully moderated. Go to the Approval Page to complete the moderation process,
-					or if you wish to change the approval status of any photos, go to Currently Approved/Rejected Entries to see
-					all the submissions that you have already approved or rejected.
-				<?php
+					?>The score adjustment was successfully applied.<br /><br /><?php
 				}
-			?>
-		</div>
+				else 
+				{
+					?>The score adjustment failed. This is most likely to be due to an incorrect player name.<?php
+				}
+			}
+		?>
+		
+		<form name="score-adjustment" action="./score-adjustment.php" method="post">
+			Name: <input type="text" name="name" value="" /><br />
+			Score <input type="text" name="adjustment" value="0" /> (e.g. 5 or -5)<br />
+			<input type="submit" name="submit" value="Submit" />
+		</form>
 	</div>
 	</body>
 </html>

@@ -139,6 +139,8 @@ function end_moderation()
 		//echo "Rejected: " . $submission->caption;
 		apply_rejection($submission->id);
 	}
+	
+	set_moderation_status('N');
 }
 
 /**
@@ -213,6 +215,32 @@ function retrieve_submission($id)
 	$connection->close();
 	
 	return $submission;
+}
+
+/**
+ * Convenience function to output a set of div-contained submission thumbnails. Passes parameters to retrieve_submissions.
+ * @param $status The status type to retrieve submissions for.
+ * @param $date (Optional) The date for which to retrieve submissions for.
+ * @return void
+ */
+function output_submissions($status, $date = null)
+{
+	$submissions = retrieve_submissions($status, $date);
+				
+	$counter = 0;
+	foreach ($submissions as $submission)
+	{
+		$counter++;
+	?>
+		<div id="submission">
+			<a href="./moderate-photo.php?id=<?php echo $submission->id; ?>">
+			<img src="nothing.jpg" width="100" height="100" /><br />
+			<?php echo $submission->caption; ?></a>
+		</div>
+	<?php
+	}
+	
+	return $counter;
 }
 
 /**
@@ -379,5 +407,24 @@ function retrieve_game_days($startDate, $endDate)
 	} while ($dateIterator != $end);
 	
 	return $gameDays;
+}
+
+/**
+ * Returns the no. of submissions that are still currently undergoing moderation ('UM') and must be moderated before moderation can end.
+ * @return Integer representing no. submissions undergoing moderation.
+ */
+function count_unmoderated_submissions()
+{
+	$connection = connect();
+	
+	$select = $connection->prepare("SELECT COUNT(*) FROM ima_submissions WHERE status = 'UM' GROUP BY status");
+	$select->bind_result($count);
+	$select->execute();
+	$select->store_result();
+	$select->fetch();
+	
+	$connection->close();
+	
+	return $count;
 }
 ?>

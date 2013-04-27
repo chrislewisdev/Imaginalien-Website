@@ -7,11 +7,6 @@
 		<link rel="icon" type="image/ico" href="images/icon.ico"/>
 		<?php 
 			require_once("admin-functions.php");
-			
-			if (isset($_POST['mod_begin']))
-			{
-				begin_moderation();
-			}
 			$moderationStatus = get_moderation_status();
 		?>
 	</head>
@@ -35,18 +30,11 @@
 				<li><a href="./all-submissions.php?date=<?php echo date('Y-m-d'); ?>">See All Submissions</a></li>
 			</ul>
 		</div>
-		<div id="content">
+	</div>
+	<div id="content">
 			<?php
-				if (output_submissions('UM') == 0)
-				{
-				?>
-					All submissions have been successfully moderated. Go to the Approval Page to complete the moderation process,
-					or if you wish to change the approval status of any photos, go to Currently Approved/Rejected Entries to see
-					all the submissions that you have already approved or rejected.
-				<?php
-				}
+				output_submissions('UA');
 			?>
 		</div>
-	</div>
 	</body>
 </html>

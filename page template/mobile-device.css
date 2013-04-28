@@ -1,0 +1,19 @@
+@import url('common.css');
+
+/*navigation*/
+#nav {font-size: 18pt;
+	  font-weight: bold;}
+	  
+#nav ul {list-style-type: none;
+		 text-align: center;
+		 width: 100%;}
+
+#nav li {border-top: 2px solid #ff8585;
+		 border-top-width: 2px;
+		 border-color: #ff8585;
+		 text-decoration: none;}
+		 
+#nav li a{text-decoration: none;}
+		 
+form input {display:block;}
+	  

@@ -25,7 +25,7 @@
 			<br/>
 		</div>
 		<div id="content">
-
+			<p>Trailer goes here</p>
 		</div>
 		<div id="footer">
 			<!--#include file="footer.ssi" -->

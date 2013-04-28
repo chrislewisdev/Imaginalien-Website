@@ -1,0 +1,18 @@
+* {margin: 0;
+   padding: 0;}
+
+body {font-family: "Calibri", verdana;
+	  background-color: #1d1d1d;
+	  color: #ff8585;
+	  font: 16px "Calibri", verdana;}
+	  
+a {color: #ffa406;}
+a:visited {color: #ef4a37;}
+a:hover {color: #11d3b6;}
+
+hr {border-color: #ff8585;}
+
+/*Footer*/
+#footer {text-align: center;
+		 font-size: 10pt;
+		 line-height: 100%;}

@@ -25,7 +25,12 @@
 			<br/>
 		</div>
 		<div id="content">
-
+			<h2>Scoreboard</h2>
+			<table>
+				<tr><th>Player name</th><th>Score</th></tr>
+				<tr><td>Gary</td><td>57</td></tr>
+				<tr><td>Hannah</td><td>52</td></tr>
+			</table>
 		</div>
 		<div id="footer">
 			<!--#include file="footer.ssi" -->

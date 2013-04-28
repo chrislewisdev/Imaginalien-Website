@@ -25,7 +25,7 @@
 			<br/>
 		</div>
 		<div id="content">
-
+			<h2>Gallery</h2>
 		</div>
 		<div id="footer">
 			<!--#include file="footer.ssi" -->

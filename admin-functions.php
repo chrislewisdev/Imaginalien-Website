@@ -24,8 +24,10 @@ class SubmissionRecord
 	public $caption;
 	/** Status of this submission- 'P' means Pending Approval, 'A' means Approved, 'R' means Rejected. */
 	public $status;
+	/** Misc. rejection note of this submission (only used in rejected entries). */
+	public $rejectionNote;
 	
-	function __construct($_id, $_accountID, $_submit_time, $_image_data, $_score, $_caption, $_status)
+	function __construct($_id, $_accountID, $_submit_time, $_image_data, $_score, $_caption, $_status, $_rejectionNote)
 	{
 		$this->id = $_id;
 		$this->accountID = $_accountID;
@@ -33,6 +35,7 @@ class SubmissionRecord
 		$this->score = $_score;
 		$this->caption = $_caption;
 		$this->status = $_status;
+		$this->rejectionNote = $_rejectionNote;
 	}
 }
 
@@ -170,7 +173,7 @@ function retrieve_submissions($status = 'P', $date = null)
 	{
 		$select->bind_param("s", $status);
 	}
-	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus);
+	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
 	$select->execute();
 	$select->store_result();
 	
@@ -178,7 +181,7 @@ function retrieve_submissions($status = 'P', $date = null)
 	$submissions = array();
 	while ($select->fetch())
 	{
-		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus);
+		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
 	}
 	
 	$connection->close();
@@ -187,17 +190,28 @@ function retrieve_submissions($status = 'P', $date = null)
 }
 
 /**
- * Retrieves all submissions for a specified user.
+ * Retrieves submissions for a specified user.
  * @param $id The ID of the user to retrieve entries for.
+ * @param $status The status for which to retrieve submissions.
+ * @param $date (Optional) A specific date for which to retrieve submissions.
  * @return A list of SubmissionRecord objects.
  */
-function retrieve_submissions_for_user($id)
+function retrieve_submissions_for_user($id, $status, $date = null)
 {
 	$connection = connect();
 	
-	$select = $connection->prepare("SELECT * FROM ima_submissions WHERE account_id = ?");
-	$select->bind_param($id);
-	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus);
+	if ($date != null)
+	{
+		$select = $connection->prepare("SELECT * FROM ima_submissions WHERE account_id = ? AND status = ? AND submit_time = ?");
+		$select->bind_param("iss", $id, $status, $date);
+	}
+	else 
+	{
+		$select = $connection->prepare("SELECT * FROM ima_submissions WHERE account_id = ? AND status = ?");
+		$select->bind_param("is", $id, $status);
+	}
+	
+	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
 	$select->execute();
 	$select->store_result();
 	
@@ -205,7 +219,7 @@ function retrieve_submissions_for_user($id)
 	$submissions = array();
 	while ($select->fetch())
 	{
-		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus);
+		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
 	}
 	
 	$connection->close();
@@ -225,7 +239,7 @@ function retrieve_submission($id)
 	//Retrieve the specified entry from the database
 	$select = $connection->prepare("SELECT * FROM ima_submissions WHERE id = ?");
 	$select->bind_param("i", $id);
-	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus);
+	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
 	$select->execute();
 	$select->store_result();
 	
@@ -237,7 +251,7 @@ function retrieve_submission($id)
 	
 	//Create the submission record object
 	$select->fetch();
-	$submission = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus);
+	$submission = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
 	
 	$connection->close();
 	
@@ -245,14 +259,14 @@ function retrieve_submission($id)
 }
 
 /**
- * Convenience function to output a set of div-contained submission thumbnails. Passes parameters to retrieve_submissions.
- * @param $status The status type to retrieve submissions for.
- * @param $date (Optional) The date for which to retrieve submissions for.
- * @return void
+ * Convenience function to output a set of div-contained submission thumbnails.
+ * @param $submissions List of submissions to output (e.g. via retrieve_submissions)
+ * @param $targetPage (Optional) a page to which to link each thumbnail, with a GET id of the submission ID
+ * @return the no. of submissions that were output
  */
-function output_submissions($status, $date = null)
+function output_submissions($submissions, $targetPage = "")
 {
-	$submissions = retrieve_submissions($status, $date);
+	//$submissions = retrieve_submissions($status, $date);
 				
 	$counter = 0;
 	foreach ($submissions as $submission)
@@ -260,9 +274,20 @@ function output_submissions($status, $date = null)
 		$counter++;
 	?>
 		<div id="submission">
-			<a href="./moderate-photo.php?id=<?php echo $submission->id; ?>">
+			<?php 
+				if ($targetPage != "") 
+				{
+					?><a href="./<?php echo $targetPage; ?>?id=<?php echo $submission->id; ?>"><?php
+				}
+			?>
 			<img src="nothing.jpg" width="100" height="100" /><br />
-			<?php echo $submission->caption; ?></a>
+			<?php echo $submission->caption; ?>
+			<?php 
+				if ($targetPage != "") 
+				{
+					?></a><?php
+				}
+			?>
 		</div>
 	<?php
 	}

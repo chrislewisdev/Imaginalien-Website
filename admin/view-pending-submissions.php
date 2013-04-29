@@ -37,7 +37,7 @@
 		</div>
 		<div id="content">
 			<?php
-				if (output_submissions('UM') == 0)
+				if (output_submissions(retrieve_submissions('UM'), 'moderate-photo.php') == 0)
 				{
 				?>
 					All submissions have been successfully moderated. Go to the Approval Page to complete the moderation process,

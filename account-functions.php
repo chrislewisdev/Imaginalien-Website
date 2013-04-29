@@ -14,7 +14,7 @@ class AccountRecord
 {
 	/** ID (int) of the account on the database- not encrypted. */
 	public $id;
-	/** Email (string) of the account. This will be encrypted and should not be changed- store decrypted emails in temporary variables only. */
+	/** Email (string) of the account. Unencrypted */
 	public $email;
 	/** Display name (string) of the account- not encrypted. */
 	public $name;
@@ -25,7 +25,7 @@ class AccountRecord
 	/** Hashed Password (string) of the account. Never decrypted, but checked against the result of crypt(hash+possiblePassword).*/
 	public $hashed_password;
 	
-	function __construct($_id, $_email, $_name, $_hashed_password, $_salt)
+	function __construct($_id, $_email, $_name, $_hashed_password, $_score, $_salt)
 	{
 		$this->id = $_id;
 		$this->email = $_email;
@@ -38,7 +38,7 @@ class AccountRecord
 }
 
 /**
- * Sets up a connection to the Imaginalien database, using Chris L's credentials.
+ * Sets up a connection to the Imaginalien database, using dev credentials.
  * @return A MySQLi connection object.
  * @throws A ConnectionException on error.
  */
@@ -64,8 +64,6 @@ function create_account($email, $displayName, $password)
 {
 	//Connect to the Imaginalien database
 	$connection = connect();
-	
-	//TODO: Salt the password
 	
 	//'Salt' created using secure pseudo-random number generator.	
 	//We add this to thwart pre-calculation of hashed common passwords.
@@ -113,7 +111,7 @@ function retrieve_account($email, $id = -1)
 		$select = $connection->prepare("SELECT * FROM ima_accounts WHERE id = ?");
 		$select->bind_param("s", $id);
 	}
-	$select->bind_result($dbID, $dbEmail, $dbName, $dbSalt, $dbPassword, $dbScore);
+	$select->bind_result($dbID, $dbEmail, $dbName, $dbPassword, $dbScore, $dbSalt);
 	$select->execute();
 	$select->store_result();
 	//Check that we actually got a match
@@ -123,7 +121,7 @@ function retrieve_account($email, $id = -1)
 	}
 	$select->fetch();
 		
-	$account = new AccountRecord($dbID, $dbEmail, $dbName, $dbSalt, $dbPassword, $dbScore);
+	$account = new AccountRecord($dbID, $dbEmail, $dbName, $dbPassword, $dbScore, $dbSalt);
 	$select->close();
 	$connection->close();
 	
@@ -233,10 +231,30 @@ function get_user_email($id = -1)
 	
 	$account = retrieve_account('not needed', get_user_id());
 	
-	//TODO: Decrypt the stored email
-	$decrypedEmail = $account->email;
+	$decryptedEmail = $account->email;
 	
-	return $decrypedEmail;
+	return $decryptedEmail;
+}
+
+/**
+ * Retrieves the score of the current user, or the user with the optional ID.
+ * @param $id (Optional) ID of the user to retrieve the score of.
+ * @return The integer email of the current user.
+ */
+function get_user_score($id = -1)
+{
+	if ($id == -1)
+	{
+		if (!is_user_logged_in()) throw new AccountException("Can't retrieve user score when no-one is logged in.");
+		else 
+		{
+			$id = get_user_id();
+		}
+	}
+	
+	$account = retrieve_account('not needed', get_user_id());
+	
+	return $account->score;
 }
 
 /**

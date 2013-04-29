@@ -33,7 +33,7 @@
 	</div>
 	<div id="content">
 			<?php
-				output_submissions('UA');
+				output_submissions(retrieve_submissions('UA'), 'moderate-photo.php');
 			?>
 		</div>
 	</body>

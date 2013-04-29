@@ -35,9 +35,8 @@
 		</div>
 		<div id="content">
 			<!-- Output list of dates the game was played on -->
-			<ul>
+			<ul id="game-dates">
 				<?php
-					//print_r($dates);
 					foreach ($dates as $date)
 					{
 					?>
@@ -48,12 +47,12 @@
 			</ul>
 			<h1>Approved Entries</h1>
 			<?php
-				output_submissions('A', $targetDate);
+				output_submissions(retrieve_submissions('A', $targetDate), 'moderate-photo.php');
 			?>
 			
 			<h1>Rejected Entries</h1>
 			<?php
-				output_submissions('R', $targetDate);
+				utput_submissions(retrieve_submissions('R', $targetDate), 'moderate-photo.php');
 			?>
 		</div>
 	</div>

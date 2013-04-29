@@ -37,7 +37,7 @@
 			</ul>
 		</div>
 		<div id="content">
-			Moderation is now complete. Good work! Take the rest of the night off.
+			Moderation is now complete. Good work! Take the rest of the night off. Or don't, if you have IMPORTANT UNI WORK to do.
 		</div>
 	</div>
 	</body>

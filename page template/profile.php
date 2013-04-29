@@ -6,6 +6,12 @@
 	{
 		header('Location: http://dev.imaginalien.com/page-test/login-register.php');
 	}
+	
+	$targetDate = date('Y-m-d');
+	if (isset($_GET['date']))
+	{
+		$targetDate = $_GET['date'];
+	}
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,7 +45,8 @@
 				Score: <?php echo get_user_score(); ?>
 			</div>
 			<div id="user-submissions">
-				
+				<!-- Display submissions by date? -->
+				<!-- Then show rejected entries -->
 			</div>
 		</div>
 		<div id="footer">

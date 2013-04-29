@@ -5,6 +5,13 @@
 		<title>Imaginalien Admin</title>
 		<link rel="stylesheet" href="style.css"/>
 		<link rel="icon" type="image/ico" href="images/icon.ico"/>
+		<style type="text/css">
+			#user-photo
+			{
+				max-width:800px;
+				max-height:800px;
+			}
+		</style>
 		<?php 
 			require_once("admin-functions.php");
 			require_once("theme-functions.php");
@@ -17,7 +24,7 @@
 			}
 			elseif (isset($_POST['reject']))
 			{
-				stage_submission_rejection($_POST['id']);
+				stage_submission_rejection($_POST['id'], $_POST['rejection_notes']);
 			}
 		?>
 		
@@ -92,7 +99,7 @@
 			{
 			?>
 				<form name="photo-moderation" action="moderate-photo.php?id=<?php echo $submission->id; ?>" method="post">
-					<img src="nothing.jpg" width="250" height="250" /><br />
+					<img id="user-photo" src="http://dev.imaginalien.com/<?php echo $submission->image_data; ?>" /><br />
 					Caption: <input type="text" id="caption" name="final_caption" value="<?php echo $submission->caption; ?>" onchange="updateCaptionScore();" /> (apply word corrections if necessary)<br />
 					Score: <span id="word_score"><?php echo get_word_length($submission->caption); ?></span> (this is the score the player will get purely from their word)<br />
 					Bonus Points: <input type="text" name="bonus_points" value="0" /> (use this to add on points for extra challenges, e.g. Catch-up Challenges)<br />

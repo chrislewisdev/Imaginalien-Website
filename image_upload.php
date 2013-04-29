@@ -1,7 +1,6 @@
-
 <?php
 /**
- * account-functions.php by Kit Mackenzie
+ * image_upload.php by Kit Mackenzie
  * Contains functions related to image uploading and daily submission limit.
  */
 
@@ -54,7 +53,7 @@ function attemptSubmission()
 function storeInDatabase($url)
 {
 	$connection = connect();
-	$insert = $connection->prepare("INSERT INTO ima_submissions(account_id, submit_time, image_url, score, caption, status) 
+	$insert = $connection->prepare("INSERT INTO ima_submissions(account_id, submit_time, image_data, score, caption, status) 
 		VALUES(?, ?, ?, ?, ?, ?)");
 		
 	$account_id = get_user_id(); 

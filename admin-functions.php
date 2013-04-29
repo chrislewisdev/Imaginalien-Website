@@ -280,7 +280,7 @@ function output_submissions($submissions, $targetPage = "")
 					?><a href="./<?php echo $targetPage; ?>?id=<?php echo $submission->id; ?>"><?php
 				}
 			?>
-			<img src="nothing.jpg" width="100" height="100" /><br />
+			<img src="http://dev.imaginalien.com/<?php echo $submission->image_data; ?>" width="100" height="100" /><br />
 			<?php echo $submission->caption; ?>
 			<?php 
 				if ($targetPage != "") 
@@ -351,15 +351,16 @@ function apply_approval($id, $playerID, $score)
 /**
  * Stages a submission for rejection- moves it from Underdoing Moderation to Rejected pending Application
  * @param $id ID of the submission to reject.
+ * @param $reason The string describing why it was rejected
  * @return true if successful, false otherwise.
  */
-function stage_submission_rejection($id)
+function stage_submission_rejection($id, $reason)
 {
 	$connection = connect();
 	$status = 'UR';
 	
-	$update = $connection->prepare("UPDATE ima_submissions SET status = ? WHERE id = ?");
-	$update->bind_param("si", $status, $id);
+	$update = $connection->prepare("UPDATE ima_submissions SET status = ? AND rejection_note = ? WHERE id = ?");
+	$update->bind_param("ssi", $status, $reason, $id);
 	$update->execute();
 	
 	if ($update->affected_rows == 0)

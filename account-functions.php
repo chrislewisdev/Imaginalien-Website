@@ -18,18 +18,22 @@ class AccountRecord
 	public $email;
 	/** Display name (string) of the account- not encrypted. */
 	public $name;
-	/** Password (string) of the account. Again, this will be encrypted, only store decrypted information in temporary variables. */
-	public $password;
 	/** Total score of the account- not encrypted. */
 	public $score;
+	/** Salt for safe password storage. Cryptographically secure random number. See http://crackstation.net/hashing-security.htm for more details.*/
+	public $salt;
+	/** Hashed Password (string) of the account. Never decrypted, but checked against the result of crypt(hash+possiblePassword).*/
+	public $hashed_password;
 	
-	function __construct($_id, $_email, $_name, $_password)
+	function __construct($_id, $_email, $_name, $_hashed_password, $_salt)
 	{
 		$this->id = $_id;
 		$this->email = $_email;
 		$this->name = $_name;
-		$this->password = $_password;
 		$this->score = $_score;
+		$this->hashed_password = $_hashed_password;
+		$this->salt = $_salt;
+		
 	}
 }
 
@@ -61,13 +65,20 @@ function create_account($email, $displayName, $password)
 	//Connect to the Imaginalien database
 	$connection = connect();
 	
-	//TODO: Encrypt the email and password
-	$encryptedEmail = $email;
-	$encryptedPassword = $password;
+	//TODO: Salt the password
 	
+	//'Salt' created using secure pseudo-random number generator.	
+	//We add this to thwart pre-calculation of hashed common passwords.
+	$salt = openssl_random_pseudo_bytes(4, $cstrong);	
+	$encodedSalt = base64_encode($salt);
+
+	//We only store the 'hash', not the supplied password.
+	//From that point on, we check against the hashed result of the salt+possible password.
+	$hashed_password = crypt($password, $encodedSalt);
+
 	//If no existing account was found, go ahead and insert the new record.
-	$insert = $connection->prepare("INSERT INTO ima_accounts(email, display_name, password) VALUES(?, ?, ?)");
-	$insert->bind_param("sss", $encryptedEmail, $displayName, $encryptedPassword);
+	$insert = $connection->prepare("INSERT INTO ima_accounts(email, display_name, salt, password) VALUES(?, ?, ?, ?)");
+	$insert->bind_param("ssss", $email, $displayName, $encodedSalt, $hashed_password);
 	if (!$insert->execute())
 	{
 		throw new AccountException($insert->error);
@@ -102,7 +113,7 @@ function retrieve_account($email, $id = -1)
 		$select = $connection->prepare("SELECT * FROM ima_accounts WHERE id = ?");
 		$select->bind_param("s", $id);
 	}
-	$select->bind_result($dbID, $dbEmail, $dbName, $dbPassword, $dbScore);
+	$select->bind_result($dbID, $dbEmail, $dbName, $dbSalt, $dbPassword, $dbScore);
 	$select->execute();
 	$select->store_result();
 	//Check that we actually got a match
@@ -112,8 +123,7 @@ function retrieve_account($email, $id = -1)
 	}
 	$select->fetch();
 		
-	$account = new AccountRecord($dbID, $dbEmail, $dbName, $dbPassword, $dbScore);
-	
+	$account = new AccountRecord($dbID, $dbEmail, $dbName, $dbSalt, $dbPassword, $dbScore);
 	$select->close();
 	$connection->close();
 	
@@ -132,9 +142,10 @@ function login($email, $password)
 	$account = retrieve_account($email);
 	
 	//Authenticate against the password
-	//TODO: Decrypt the password from the database
-	$decryptedPassword = $account->password;
-	if ($password == $decryptedPassword)
+
+	$hashed_possible_password = crypt($password, $account->salt);
+	
+	if ($hashed_possible_password == $account->hashed_password)
 	{
 		//Set up the session data
 		$result = true;

@@ -13,7 +13,26 @@
 		 border-color: #ff8585;
 		 text-decoration: none;}
 		 
-#nav li a{text-decoration: none;}
+#nav li a{text-decoration: none;
+		  color: #ffc1c1;}
+		  
+#nav li a:hover {color: #ffc1c1;}
+#nav li a:visited {color: #ffc1c1;}
 		 
-form input {display:block;}
-	  
+form input:not([type=submit]) {display:block;
+			margin: 5px;}
+
+.desktop-only {display:none;}
+
+.button:not(input) {font-weight: bold;
+					color: #ffc1c1;} 
+					
+#photo-button {
+			   display: block;
+			   color: #f37808;
+			   border: 2px solid #f37808;
+			   text-decoration: none;
+			   text-align: center;
+			   margin-left: 40px;
+			   margin-right: 40px;
+			   margin-top: 10px;}

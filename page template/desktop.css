@@ -14,8 +14,6 @@ h2 {text-shadow: 2px 2px 4px #040404;
 
 p {margin: 20px;}
 
-.mobile-only {display: none;}
-
 #container {width: 90%;
 			margin: 10px auto;
 			line-height: 130%;
@@ -61,6 +59,9 @@ p {margin: 20px;}
 					
 /*Login*/
 #login {clear: both;}
+
+#photo-button {margin-left: 20px;
+			   background: url(images/button-orange.jpg) repeat-x;}
 		
 /*Main content*/
 #content {margin-left: 100px;
@@ -71,12 +72,20 @@ p {margin: 20px;}
 /*Form*/
 form input {border-width: 2px;
 			border-color: black;
-			margin: 4px;
+			margin: 2px;
 			padding:4px;
-			background-color: #090909;
+			background-color: white;
 			color: white;}
 			
 form input:focus {outline-color: #ff8585}
+
+#sign-up-form input:not([type=submit]) {width: 180px;
+					margin-bottom: 5px;}
+					
+#sign-up-form label {float: left;
+					 width: 150px;
+					 font-weigth: bold;
+					 }
 
 /*Table*/
 table {margin-left: auto;
@@ -93,11 +102,11 @@ th {border-width: 0px;
 	border-style: solid;}
 	
 /* Misc classes*/
-.button {margin-bottom: 5px;
+.button {margin-bottom: 2px;
 		color: white;
-		background: url(images/button.jpg) repeat-x;  
+		background: url(images/button-red.jpg) repeat-x;  
 		width: 50px;
-		padding:6px 0;  
+		padding:6px 4px;  
 		text-align:center;  
 		border:1px solid #892525;  
 		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8);  
@@ -106,10 +115,15 @@ th {border-width: 0px;
 		text-decoration: none;  
 		opacity:.85;}
 				
-.button:hover {border-color: white;}
+.button:hover {border-color: white;
+			   color: white;}
 
 .button:active {background-position:  0 -200px;  
 					text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);}
+					
+.button:visited {color: white;}
+					
+.mobile-only {display: none;}
 					
 .left-column {float: left;}
 .right-column {float:right;}

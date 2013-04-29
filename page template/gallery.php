@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -12,28 +13,47 @@
 	<div id="container">
 	<div id="wrapper">
 		<div id="header">
-			<!--#include file="header.ssi" -->
+			<?php
+				ob_start();
+				include 'header.php';
+				$out = ob_get_contents();
+				ob_end_clean();
+				echo $out;
+			?>
 		</div>
 		<div id="nav">
-			<!--#include file="navigation.ssi" -->
+			<?php
+				ob_start();
+				include 'navigation.php';
+				$out = ob_get_contents();
+				ob_end_clean();
+				echo $out;
+			?>
 		</div>
 	</div>
 		<div id="login">
 			<hr/>
 			<br/>
-			<!--#include file="login.ssi" -->
+			<?php
+				ob_start();
+				include 'login.php';
+				$out = ob_get_contents();
+				ob_end_clean();
+				echo $out;
+			?>
 			<br/>
 		</div>
 		<div id="content">
-			<h2>Scoreboard</h2>
-			<table>
-				<tr><th>Player name</th><th>Score</th></tr>
-				<tr><td>Gary</td><td>57</td></tr>
-				<tr><td>Hannah</td><td>52</td></tr>
-			</table>
+		
 		</div>
 		<div id="footer">
-			<!--#include file="footer.ssi" -->
+			<?php
+				ob_start();
+				include 'footer.php';
+				$out = ob_get_contents();
+				ob_end_clean();
+				echo $out;
+			?>
 		</div>
 	</div>
 	</body>

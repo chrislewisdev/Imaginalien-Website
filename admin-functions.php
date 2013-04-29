@@ -186,6 +186,33 @@ function retrieve_submissions($status = 'P', $date = null)
 	return $submissions;
 }
 
+/**
+ * Retrieves all submissions for a specified user.
+ * @param $id The ID of the user to retrieve entries for.
+ * @return A list of SubmissionRecord objects.
+ */
+function retrieve_submissions_for_user($id)
+{
+	$connection = connect();
+	
+	$select = $connection->prepare("SELECT * FROM ima_submissions WHERE account_id = ?");
+	$select->bind_param($id);
+	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus);
+	$select->execute();
+	$select->store_result();
+	
+	//Loop through all submissions and build up our list
+	$submissions = array();
+	while ($select->fetch())
+	{
+		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus);
+	}
+	
+	$connection->close();
+	
+	return $submissions;
+}
+
 /** 
  * Retrieves a single submission entry.
  * @param $id The database ID of the submission to retrieve.

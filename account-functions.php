@@ -40,7 +40,7 @@ class AccountRecord
  */
 function connect()
 {
-	$connection = new mysqli('localhost', 'imaginal_chris', 'hagm201chris', 'imaginal_dev_chris_db');
+	$connection = new mysqli('localhost', 'imaginal_devs', 'hagm201', 'imaginal_data');
 	if ($connection->errno != 0)
 	{
 		throw new ConnectionException($connection->error);

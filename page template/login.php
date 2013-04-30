@@ -1,5 +1,5 @@
 <form name="login" action="" method="post" >
-	<label for="username" class="mobile-only">Username: </label><input type="text" name="username" placeholder="username"/>
+	<label for="email" class="mobile-only">Email: </label><input type="text" name="email" placeholder="email"/>
 	<label for="password" class="mobile-only">Password: </label><input type="text" name="password" placeholder="password"/>
 	<input type="submit" value="Login" class="button"/>
 	<a href="sign-up.php" title="Register" class="button">Register</a>

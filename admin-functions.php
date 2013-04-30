@@ -280,7 +280,7 @@ function output_submissions($submissions, $targetPage = "")
 					?><a href="./<?php echo $targetPage; ?>?id=<?php echo $submission->id; ?>"><?php
 				}
 			?>
-			<img src="http://dev.imaginalien.com/<?php echo $submission->image_data; ?>" width="100" height="100" /><br />
+			<img src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_data; ?>" width="100" height="100" /><br />
 			<?php echo $submission->caption; ?>
 			<?php 
 				if ($targetPage != "") 
@@ -460,6 +460,29 @@ function retrieve_game_days($startDate, $endDate)
 	} while ($dateIterator != $end);
 	
 	return $gameDays;
+}
+
+/**
+ * Outputs a list of days on which the game was played between the two given dates. Uses retrieve_game_days.
+ * @param $startDate (string, Y-m-d) Starting date for the game interval. Use $IMAGINALIEN_LAUNCH_DATE to get all days since the game started.
+ * @param $endDate (string, Y-m-d) Cut-off date for day intervals. Use today's date if looking for all days since the game started until today (inclusive).
+ * @param $targetPage The URL each date should link to, with the date's GET value
+ * @return void
+ */
+function output_game_days($startDate, $endDate, $targetPage)
+{
+?>
+	<ul class="game-dates">
+		<?php
+			foreach (retrieve_game_days($startDate, $endDate) as $date)
+			{
+			?>
+				<li><a href="<?php echo $targetPage; ?>?date=<?php echo $date; ?>"><?php echo $date; ?></a></li>
+			<?php
+			}
+		?>
+	</ul>
+<?php
 }
 
 /**

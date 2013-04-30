@@ -38,6 +38,12 @@
 			$errorMessage = $e->getMessage();
 		}
 	}
+	//Check for a logout request
+	if (isset($_POST['logout']))
+	{
+		logout();
+		$errorMessage = "Successfully logged out.";
+	}
 	
 	//If a login/register was successfully processed, redirect to the user profile page
 	if ($loginSuccess)
@@ -54,65 +60,7 @@
 		<link rel="stylesheet" media="only screen and (max-width: 400px)" href="mobile-device.css"/>
 		<link rel="stylesheet" media="only screen and (min-width: 401px)" href="desktop.css"/>
 		<link rel="icon" type="image/ico" href="images/icon.ico"/>
-		<script type="text/javascript">
-			function validateRegistration()
-			{
-				var email = document.getElementById("register-email").value;
-				var name = document.getElementById("register-name").value;
-				var password = document.getElementById("register-password").value;
-				
-				var errorString = "";
-				
-				if (email.trim() == "")
-				{
-					errorString += "Registration email can not be blank\n";
-				}
-				
-				if (name.trim() == "")
-				{
-					errorString += "Registration name can not be blank\n";
-				}
-				
-				if (password.trim() == "")
-				{
-					errorString += "Registration password can not be blank\n";
-				}
-				
-				if (errorString != "")
-				{
-					alert(errorString);
-					return false;
-				}
-				
-				return true;
-			}
-			
-			function validateLogin()
-			{
-				var email = document.getElementById("login-email").value;
-				var password = document.getElementById("login-password").value;
-				
-				var errorString = "";
-				
-				if (email.trim() == "")
-				{
-					errorString += "Login email can not be blank\n";
-				}
-				
-				if (password.trim() == "")
-				{
-					errorString += "Login password can not be blank\n";
-				}
-				
-				if (errorString != "")
-				{
-					alert(errorString);
-					return false;
-				}
-				
-				return true;
-			}
-		</script>
+		<script type="text/javascript" src="validation.js"></script>
 	</head>
 	<body>
 	<div id="container">
@@ -136,8 +84,8 @@
 				if ($errorMessage != "")
 				{
 				?>
-					<div class="error-message">
-						Error: <?php echo $errorMessage; ?>
+					<div class="message">
+						<?php echo $errorMessage; ?>
 					</div>
 				<?php
 				}

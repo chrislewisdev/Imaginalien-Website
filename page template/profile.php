@@ -4,7 +4,7 @@
 	
 	if (!is_user_logged_in())
 	{
-		header('Location: http://dev.imaginalien.com/page-test/login-register.php');
+		header('Location: http://dev.imaginalien.com/page-test/sign-up.php');
 	}
 	
 	$targetDate = date('Y-m-d');
@@ -22,6 +22,7 @@
 		<link rel="stylesheet" media="only screen and (max-width: 400px)" href="mobile-device.css"/>
 		<link rel="stylesheet" media="only screen and (min-width: 401px)" href="desktop.css"/>
 		<link rel="icon" type="image/ico" href="images/icon.ico"/>
+		<script type="text/javascript" src="validation.js"></script>
 	</head>
 	<body>
 	<div id="container">
@@ -59,8 +60,8 @@
 		</div>
 		<div id="content">
 			<div id="user-details">
-				<?php echo get_user_name(); ?><br />
-				Score: <?php echo get_user_score(); ?>
+				<h1><?php echo get_user_name(); ?></h1>
+				Your Score: <?php echo get_user_score(); ?>
 			</div>
 			<div id="user-submissions">
 				<!-- Display submissions by date? -->

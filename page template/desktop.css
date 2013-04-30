@@ -75,17 +75,34 @@ form input {border-width: 2px;
 			margin: 2px;
 			padding:4px;
 			background-color: white;
-			color: white;}
+			color: black;}
 			
 form input:focus {outline-color: #ff8585}
 
-#sign-up-form input:not([type=submit]) {width: 180px;
+#sign-up-form input:not([type=submit]), #login-form input:not([type=submit]) {width: 180px;
 					margin-bottom: 5px;}
 					
-#sign-up-form label {float: left;
+#sign-up-form label, #login-form label {float: left;
 					 width: 150px;
 					 font-weigth: bold;
 					 }
+
+#register-login-content
+{
+	max-width:800px;
+	margin-left:auto;
+	margin-right:auto;
+	height:300px;
+}
+#register-side
+{
+	float:left;
+	border-right:#ff8585 1px solid;
+}
+#login-side
+{
+	float:right;
+}
 
 /*Table*/
 table {margin-left: auto;

@@ -38,8 +38,8 @@ function attemptSubmission()
 			storeInDatabase($url);
 			
 			//Send response: 'Thanks! You have X more photos remaining today!'
-			header("Location: http://www.imaginalien.com/anotherGo.php"); /* Redirect browser */
-			exit();
+			//header("Location: http://www.imaginalien.com/anotherGo.php"); /* Redirect browser */
+			//exit();
 		}
 	}
 }
@@ -119,5 +119,5 @@ function storeInServer()
 	}
 	return $url;
 }
-	attemptSubmission();
+	//attemptSubmission();
 ?>

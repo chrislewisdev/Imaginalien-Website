@@ -1,5 +1,58 @@
-<?php session_start(); ?>
+<?php
+	require_once("account-functions.php");
+	session_start();
+	
+	//Initialise an error-message holder; if it gets set to anything, the section above login/register form will show the message
+	$errorMessage = "";
+	//Login/registration success handle to check if we want to redirect to the user profile page
+	$loginSuccess = false;
 
+	//Check for a registration request
+	if (isset($_POST['register']))
+	{
+		//Try process the registration
+		try
+		{
+			create_account($_POST['email'], $_POST['display_name'], $_POST['password']);
+			login($_POST['email'], $_POST['password']);
+			$loginSuccess = true;
+		}
+		catch (AccountException $e)
+		{
+			$errorMessage = $e->getMessage();
+		}
+	}
+	//Check for a login request
+	if (isset($_POST['login']))
+	{
+		//Try process the login
+		try
+		{
+			$loginSuccess = login($_POST['email'], $_POST['password']);
+			if (!$loginSuccess)
+			{
+				$errorMessage = "Incorrect password.";
+			}
+		}
+		catch (AccountException $e)
+		{
+			$errorMessage = $e->getMessage();
+		}
+	}
+	//Check for a logout request
+	if (isset($_POST['logout']))
+	{
+		logout();
+		$errorMessage = "Successfully logged out.";
+	}
+	
+	//If a login/register was successfully processed, redirect to the user profile page
+	if ($loginSuccess)
+	{
+		header('Location: http://dev.imaginalien.com/page-test/profile.php');
+		exit();
+	}
+?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,7 +62,7 @@
 		<link rel="stylesheet" media="only screen and (max-width: 400px)" href="mobile-device.css"/>
 		<link rel="stylesheet" media="only screen and (min-width: 401px)" href="desktop.css"/>
 		<link rel="icon" type="image/ico" href="images/icon.ico"/>
-		
+		<script type="text/javascript" src="validation.js"></script>
 	</head>
 	<body>
 	<div id="container">
@@ -33,18 +86,48 @@
 			?>
 		</div>
 	</div>
-		<hr/>
+		<hr />
 		<div id="content">
-			<h2>Sign Up</h2>
-			<form name="sign-up" action="" method="post" id="sign-up-form">
-				<p><label for="username">Username:</label> <input type="text" name="username" size="20"/></p>
-				<p><label for="email">Email address:</label> <input type="text" name="email" size="40"/></p>
-				<br/>
-				<p><label for="password">Password:</label> <input type="text" name="password" size="20"/></p>
-				<p><label for="password-confirm">Confirm password:</label> <input type="text" name="password-confirm" size="20"/></p>
-				<br/>
-				<p><input type="submit" value="Join" class="button"/></p>
-			</form>
+			<?php
+				//Display an error message if one is available
+				if ($errorMessage != "")
+				{
+				?>
+					<div class="message">
+						<?php echo $errorMessage; ?>
+					</div>
+				<?php
+				}
+			?>
+			<div id="register-login-content">
+				<div id="register-side">
+					<h2>Sign Up</h2>
+					<form name="sign-up" action="./sign-up.php" method="post" id="sign-up-form" onsubmit="return validateRegistration();">
+						<p>
+							<label for="display_name">Username:</label> <input type="text" id="register-email" name="display_name" size="20"/><br />
+							<label for="email">Email address:</label> <input type="text" id="register-name" name="email" size="40"/>
+						</p>
+						
+						<p>
+							<label for="password">Password:</label> <input type="password" id="register-password" name="password" size="20"/><br />
+							<label for="password-confirm">Confirm password:</label> <input type="password" id="register-confirm-password" name="password-confirm" size="20"/>
+						</p>
+						
+						<p><input type="submit" name="register" value="Join" class="button"/></p>
+					</form>
+				</div>
+				<div id="login-side">
+					<h2>Login</h2>
+					<form name="login" action="./sign-up.php" method="post" id="login-form" onsubmit="return validateLogin();">
+						<p>
+							<label for="email">Email address:</label> <input type="text" id="login-email" name="email" size="40"/><br />
+							<label for="password">Password:</label> <input type="password" id="login-password" name="password" size="20"/>
+						</p>
+						
+						<p><input type="submit" name="login" value="Login" class="button"/></p>
+					</form>
+				</div>
+			</div>
 		</div>
 		<div id="footer">
 			<?php

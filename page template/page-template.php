@@ -1,5 +1,4 @@
 <?php session_start(); ?>
-
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,7 +8,7 @@
 		<link rel="stylesheet" media="only screen and (max-width: 400px)" href="mobile-device.css"/>
 		<link rel="stylesheet" media="only screen and (min-width: 401px)" href="desktop.css"/>
 		<link rel="icon" type="image/ico" href="images/icon.ico"/>
-		
+		<script type="text/javascript" src="validation.js"></script>
 	</head>
 	<body>
 	<div id="container">

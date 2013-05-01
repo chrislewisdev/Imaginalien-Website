@@ -99,7 +99,7 @@
 			{
 			?>
 				<form name="photo-moderation" action="moderate-photo.php?id=<?php echo $submission->id; ?>" method="post">
-					<img id="user-photo" src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_data; ?>" /><br />
+					<img id="user-photo" src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_url; ?>" /><br />
 					Caption: <input type="text" id="caption" name="final_caption" value="<?php echo $submission->caption; ?>" onchange="updateCaptionScore();" /> (apply word corrections if necessary)<br />
 					Score: <span id="word_score"><?php echo get_word_length($submission->caption); ?></span> (this is the score the player will get purely from their word)<br />
 					Bonus Points: <input type="text" name="bonus_points" value="0" /> (use this to add on points for extra challenges, e.g. Catch-up Challenges)<br />

@@ -5,7 +5,7 @@
 	$targetDate = most_recent_weekday();
 	if (isset($_GET['date']))
 	{
-		$targetDate = date('Y-m-d');
+		$targetDate = $_GET['date'];
 	}
 ?>
 <!DOCTYPE html>

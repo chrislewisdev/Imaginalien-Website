@@ -14,6 +14,8 @@
  */
 function attemptSubmission()
 {
+	$SUBMISSIONS_PER_DAY = 3;
+	
 	//If today is Saturday or Sunday
 	if(date("N", $timestamp) == 6 || date("N", $timestamp) == 7)
 	{
@@ -30,8 +32,9 @@ function attemptSubmission()
 	else
 	{
 		$id=get_user_id();
-		if(checkSubmissionCount($id) > 4)
+		if(checkSubmissionCount($id) > $SUBMISSIONS_PER_DAY)
 		{
+			error_log(checkSubmissionCount($id));
 			//Redirect to 'Sorry, all submissions used up today!'
 			header("Location: http://www.imaginalien.com/allUsedUp.php"); /* Redirect browser */
 			exit();

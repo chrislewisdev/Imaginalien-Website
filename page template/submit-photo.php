@@ -13,7 +13,7 @@
 	}
 	else
 	{
-		if(checkSubmissionCount(get_user_id()) > 4)
+		if(checkSubmissionCount(get_user_id()) >= 3)
 		{
 			//Redirect to 'Sorry, all submissions used up today!'
 			//header("Location: http://www.imaginalien.com/allUsedUp.php"); /* Redirect browser */

@@ -16,8 +16,8 @@ class SubmissionRecord
 	public $accountID;
 	/** Time it was submitted- Type of MySQL Date info??? */
 	public $submit_time;
-	/** Binary image data for the photo- need to look into how BLOB data can be used for image display. */
-	public $image_data;
+	/** URL link to the location where the image file is stored upon the server. */
+	public $image_url;
 	/** Score for this submission. */
 	public $score;
 	/** Caption (word) for this submission. */
@@ -27,11 +27,11 @@ class SubmissionRecord
 	/** Misc. rejection note of this submission (only used in rejected entries). */
 	public $rejectionNote;
 	
-	function __construct($_id, $_accountID, $_submit_time, $_image_data, $_score, $_caption, $_status, $_rejectionNote)
+	function __construct($_id, $_accountID, $_submit_time, $_image_url, $_score, $_caption, $_status, $_rejectionNote)
 	{
 		$this->id = $_id;
 		$this->accountID = $_accountID;
-		$this->image_data = $_image_data;
+		$this->image_url = $_image_url;
 		$this->score = $_score;
 		$this->caption = $_caption;
 		$this->status = $_status;
@@ -280,7 +280,7 @@ function output_submissions($submissions, $targetPage = "")
 					?><a href="./<?php echo $targetPage; ?>?id=<?php echo $submission->id; ?>"><?php
 				}
 			?>
-			<img src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_data; ?>" width="100" height="100" border="0" /><br />
+			<img src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_url; ?>" width="100" height="100" /><br />
 			<?php echo $submission->caption; ?>
 			<?php 
 				if ($targetPage != "") 

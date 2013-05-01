@@ -14,6 +14,13 @@
  */
 function attemptSubmission()
 {
+	//If today is Saturday or Sunday
+	if(date("N", $timestamp) == 6 || date("N", $timestamp) == 7)
+	{
+		//Wrong day of the week! Redirect
+		header("Location: http://www.imaginalien.com/anotherDay.php"); /* Redirect browser */
+		exit();
+	}
 	if(! is_user_logged_in())
 	{
 		//redirect to login page

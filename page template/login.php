@@ -22,3 +22,5 @@
 	?>
 	<a href="submit-photo.php" title="Submit Photo" class="button" id="photo-button">Submit Photo</a>
 </form>
+<br class="mobile-only"/>
+<p id="daily-theme">Todays theme is the letter P</p>

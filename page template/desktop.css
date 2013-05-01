@@ -21,7 +21,13 @@ ol {margin-left: 50px;}
 			min-width: 768px;}
 			
 #wrapper {position: relative; height: 140px;}
+
+/*header*/
 #header {position: absolute; left: 0; bottom:20px;}
+#facebook-icon {position: absolute;
+				right: 0px;
+				bottom: 40px;
+				overflow: auto;}
 
 /*navigation*/
 #nav {font-size: 18pt;
@@ -59,6 +65,14 @@ ol {margin-left: 50px;}
 	  -o-transition: .2s;}
 					
 /*Login*/
+#daily-theme {margin: 3px;
+			  padding: 3px;
+			  margin-left: 40px;
+			  font-size: 15pt;
+			  font-style: italic;
+			  font-weight: bold;
+			  color: #f37808;}
+
 #login {clear: both;}
 
 #photo-button {margin-left: 20px;

@@ -1,3 +1,5 @@
+<a href="https://www.facebook.com/Imaginalien"><img src="images/facebookIcon.jpg" title="Imaginalien Facebook Page" alt="Facebook Page" width="100" height="38" id="facebook-icon"/></a>
+<br class="mobile-only"/>
 <ul>
 	<li><a href="index.php" title="Home">Home</a></li>
 	<li><a href="instructions.php" title="Instructions">Instructions</a></li>

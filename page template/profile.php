@@ -61,7 +61,7 @@
 		<div id="content">
 			<div id="user-details">
 				<h1><?php echo get_user_name(); ?></h1>
-				Your Score: <?php echo get_user_score(); ?>
+				<p><strong>Your Score: <?php echo get_user_score(); ?></strong></p>
 			</div>
 			<div id="user-submissions">
 				<h1>Your Submissions</h1>

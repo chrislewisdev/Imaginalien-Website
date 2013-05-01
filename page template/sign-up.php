@@ -102,7 +102,7 @@
 			<div id="register-login-content">
 				<div id="register-side">
 					<h2>Sign Up</h2>
-					<form name="sign-up" action="./sign-up.php" method="post" id="sign-up-form" onsubmit="return validateRegistration();">
+					<form name="sign-up" action="./sign-up.php" method="post" class="aligned-form" onsubmit="return validateRegistration();">
 						<p>
 							<label for="display_name">Username:</label> <input type="text" id="register-email" name="display_name" size="20"/><br />
 							<label for="email">Email address:</label> <input type="text" id="register-name" name="email" size="40"/>
@@ -118,7 +118,7 @@
 				</div>
 				<div id="login-side">
 					<h2>Login</h2>
-					<form name="login" action="./sign-up.php" method="post" id="login-form" onsubmit="return validateLogin();">
+					<form name="login" action="./sign-up.php" method="post" class="aligned-form" onsubmit="return validateLogin();">
 						<p>
 							<label for="email">Email address:</label> <input type="text" id="login-email" name="email" size="40"/><br />
 							<label for="password">Password:</label> <input type="password" id="login-password" name="password" size="20"/>

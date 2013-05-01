@@ -15,7 +15,7 @@
 		else 
 		{
 		?>
-			Welcome, <?php echo get_user_name(); ?>.
+			Welcome, <?php echo get_user_name(); ?>. &nbsp;
 			<input type="submit" name="logout" value="Logout" class="button" />
 		<?php
 		}

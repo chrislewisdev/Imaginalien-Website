@@ -80,10 +80,12 @@ form input {border-width: 2px;
 			
 form input:focus {outline-color: #ff8585}
 
-#sign-up-form input:not([type=submit]), #login-form input:not([type=submit]) {width: 180px;
+
+
+.aligned-form input:not([type=submit]){width: 180px;
 					margin-bottom: 5px;}
 					
-#sign-up-form label, #login-form label {float: left;
+.aligned-form label {float: left;
 					 width: 150px;
 					 font-weigth: bold;
 					 }
@@ -123,7 +125,7 @@ th {border-width: 0px;
 .button {margin-bottom: 2px;
 		color: white;
 		background: url(images/button-red.jpg) repeat-x;  
-		width: 50px;
+		width: 60px;
 		padding:6px 4px;  
 		text-align:center;  
 		border:1px solid #892525;  

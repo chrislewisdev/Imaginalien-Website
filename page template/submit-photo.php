@@ -72,12 +72,12 @@
 				if ($errorMessage == "")
 				{
 				?>
-					<form action="submit-photo-confirmation.php" method="post" enctype="multipart/form-data">
+					<form action="submit-photo-confirmation.php" method="post" enctype="multipart/form-data" class="aligned-form">
 						<label for="file">Your photo:</label>
-						<input type="file" name="file" id="file" size="20" /><br />
+						<input type="file" name="file" id="file" size="20"/><br />
 						<label for="title">Name of your object:</label>
 						<input type="text" name="title" /><br />
-						<input type="submit" name="submit-photo" value="Submit" />
+						<input type="submit" name="submit-photo" value="Submit" class="button"/>
 					</form>
 				<?php
 				}

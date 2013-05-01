@@ -8,11 +8,12 @@ body {background-image: url('./images/eye.png');
 
 hr {margin-bottom: 10px;}
 
-h2 {text-shadow: 2px 2px 4px #040404;
+h1, h2 {text-shadow: 2px 2px 4px #040404;
 	margin: 5px;
 	margin-bottom: 20px;}
 
-p {margin: 20px;}
+p, ol {margin: 20px;}
+ol {margin-left: 50px;}
 
 #container {width: 90%;
 			margin: 10px auto;

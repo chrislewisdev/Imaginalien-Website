@@ -105,9 +105,7 @@
 					Bonus Points: <input type="text" name="bonus_points" value="0" /> (use this to add on points for extra challenges, e.g. Catch-up Challenges)<br />
 					Submitted by <?php echo get_user_name($submission->accountID); ?><br />
 					Rejection Notes:<br />
-					<textarea name="rejection_notes">
-						Use this space to leave reasons for rejection if a submission is rejected. (max. 140 chars)
-					</textarea><br />
+					<textarea name="rejection_notes" cols="40">Use this space to leave reasons for rejection if a submission is rejected. (max. 140 chars)</textarea><br />
 					
 					<!-- Display all photo themes for the user -->
 					This photo was submitted during the following themes:

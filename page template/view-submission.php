@@ -1,11 +1,35 @@
 <?php 
 	session_start();
-	require_once("admin-functions.php"); 
+	require_once("admin-functions.php");
 	
-	$targetDate = most_recent_weekday();
-	if (isset($_GET['date']))
+	$authorised = false;
+	
+	if (isset($_GET['id']))
 	{
-		$targetDate = date('Y-m-d');
+		$submission = retrieve_submission($_GET['id']);
+		
+		if ($submission != null)
+		{
+			//If the submission has not been approved yet, only the author may see it
+			if ($submission->status != 'A')
+			{
+				if (is_user_logged_in() and get_user_id() == $submission->accountID)
+				{
+					$authorised = true;
+				}
+			}
+			//If the submission is Approved, let anyone view it
+			else 
+			{
+				$authorised = true;
+			}
+		}
+	}
+	
+	if (!$authorised)
+	{
+		header('Location: http://www.imaginalien.com');
+		exit();
 	}
 ?>
 <!DOCTYPE html>
@@ -54,17 +78,20 @@
 			<br/>
 		</div>
 		<div id="content">
-			<h1>Gallery: <?php $dateObject = new DateTime($targetDate); echo $dateObject->format('D j M'); ?></h1>
-			<?php
-				output_game_days($IMAGINALIEN_LAUNCH_DATE, date('Y-m-d'), './gallery.php');
-			?>
-			<br />
-			<div id="user-submissions">
-				<div class="submission-grid">
-					<?php output_submissions(retrieve_submissions('A', $targetDate), 'view-submission.php'); ?>
-				</div>
+			<div id="view-submission">
+				<?php
+					if ($submission->status == 'R')
+					{
+					?>
+						This submission was rejected by our moderators.<br />
+						Reason: <?php echo $submission->rejectionNote; ?><br />
+					<?php
+					}
+				?>
+				<img id="user-photo" src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_data; ?>" border="0" /><br />
+				<?php echo $submission->caption; ?><br />
+				Submitted by: <?php echo get_user_name($submission->accountID); ?>
 			</div>
-			
 		</div>
 		<div id="footer">
 			<?php

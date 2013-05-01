@@ -1,5 +1,7 @@
 @import url('common.css');
 
+ol {margin-left: 25px;}
+
 /*navigation*/
 #nav {font-size: 18pt;
 	  font-weight: bold;}

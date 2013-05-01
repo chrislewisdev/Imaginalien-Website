@@ -1,5 +1,5 @@
 <?php
-	require_once("account-functions.php"); 
+	require_once("admin-functions.php"); 
 	session_start();
 	
 	if (!is_user_logged_in())
@@ -64,8 +64,28 @@
 				Your Score: <?php echo get_user_score(); ?>
 			</div>
 			<div id="user-submissions">
-				<!-- Display submissions by date? -->
-				<!-- Then show rejected entries -->
+				<h1>Your Submissions</h1>
+				
+				<h2>Pending Moderation</h2>
+				<p>Submissions that show up here have not yet been checked by our moderators. Moderation is done every weeknight, so they should show up soon!</p>
+				<div class="submission-grid">
+					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'P'), 'view-submission.php'); ?>
+					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'UM'), 'view-submission.php'); ?>
+					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'UA'), 'view-submission.php'); ?>
+					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'UR'), 'view-submission.php'); ?>
+				</div>
+				
+				<h2>Approved</h2>
+				<p>All submissions that show up here have been given the A-OK by our moderators, and have granted you points. Hurray!</p>
+				<div class="submission-grid">
+					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'A'), 'view-submission.php'); ?>
+				</div>
+				
+				<h2>Rejected</h2>
+				<p>If any of your submissions are rejected by moderators, they will show up here. You can click on each submission to view it and see why it was rejected.</p>
+				<div class="submission-grid">
+					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'R'), 'view-submission.php'); ?>
+				</div>
 			</div>
 		</div>
 		<div id="footer">

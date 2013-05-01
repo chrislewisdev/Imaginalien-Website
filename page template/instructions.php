@@ -45,7 +45,24 @@
 			<br/>
 		</div>
 		<div id="content">
-		
+			<h1>Instructions</h1>
+			Getting started with Imaginalien is simple:
+			
+			<ol>
+				<li>If you haven't already, <a href="./sign-up.php">create an account</a>.</li>
+				<li>Check the daily theme, either here or at the <a href="http://www.facebook.com/#!/Imaginalien">Imaginalien Facebook Page</a>.</li>
+				<li>Take photos of objects at Swinburne Hawthorn that fit the daily theme!</li>
+				<li><a href="./submit-photo.php">Submit your photos</a> on this website, from your mobile or PC.</li>
+				<li>Receive Points and climb the <a href="scoreboard.php">Scoreboards</a>!</li>
+			</ol>
+			
+			<h2>The Official Rules</h2>
+			<ol>
+				<li>Submitted photos must fit the daily theme: e.g. if the daily theme is 'L', the objects you choose must start with L!</li>
+				<li>The reward you get is determined by the length of the name of your object- so for example, 'Lamp' is worth 4 points, and 'Lecture' is worth 7.</li>
+				<li>However, words will be worth less if multiple people submit the same object. So try to be creative!</li>
+				<li>At the end of each day, scores will be tallied and announced; then you can check your new score and leaderboard position.</li>
+			</ol>
 		</div>
 		<div id="footer">
 			<?php

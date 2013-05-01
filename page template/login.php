@@ -5,8 +5,8 @@
 		if (!is_user_logged_in())
 		{
 		?>
-			<label for="email" class="mobile-only">Email: </label><input type="text" id="login-email" name="email" value="Email" placeholder="email"/>
-			<label for="password" class="mobile-only">Password: </label><input type="password" id="login-password" name="password" value="password" placeholder="password"/>
+			<label for="email" class="mobile-only">Email: </label><input type="text" id="login-email" name="email" placeholder="email"/>
+			<label for="password" class="mobile-only">Password: </label><input type="password" id="login-password" name="password" placeholder="password"/>
 			<input type="submit" name="login" value="Login" class="button"/>
 			<a href="sign-up.php" title="Register" class="button">Register</a>
 		<?php

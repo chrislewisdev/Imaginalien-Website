@@ -73,10 +73,10 @@
 				{
 				?>
 					<form action="submit-photo-confirmation.php" method="post" enctype="multipart/form-data">
-						<label for="file">Filename:</label>
+						<label for="file">Your photo:</label>
 						<input type="file" name="file" id="file" size="20" /><br />
-						<label for="title">Your word:</label>
-						<input type="text" name="title" value="title"; /><br />
+						<label for="title">Name of your object:</label>
+						<input type="text" name="title" /><br />
 						<input type="submit" name="submit-photo" value="Submit" />
 					</form>
 				<?php

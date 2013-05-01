@@ -10,7 +10,7 @@
 			$moderationStatus = get_moderation_status();
 			
 			$targetDate = $_GET['date'];
-			$dates = retrieve_game_days('2013-04-10', date('Y-m-d'));
+			$dates = retrieve_game_days($IMAGINALIEN_LAUNCH_DATE, date('Y-m-d'));
 		?>
 	</head>
 	<body>

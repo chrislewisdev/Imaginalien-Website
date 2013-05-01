@@ -273,14 +273,14 @@ function output_submissions($submissions, $targetPage = "")
 	{
 		$counter++;
 	?>
-		<div id="submission">
+		<div class="submission">
 			<?php 
 				if ($targetPage != "") 
 				{
 					?><a href="./<?php echo $targetPage; ?>?id=<?php echo $submission->id; ?>"><?php
 				}
 			?>
-			<img src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_data; ?>" width="100" height="100" /><br />
+			<img src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_data; ?>" width="100" height="100" border="0" /><br />
 			<?php echo $submission->caption; ?>
 			<?php 
 				if ($targetPage != "") 
@@ -359,7 +359,7 @@ function stage_submission_rejection($id, $reason)
 	$connection = connect();
 	$status = 'UR';
 	
-	$update = $connection->prepare("UPDATE ima_submissions SET status = ? AND rejection_note = ? WHERE id = ?");
+	$update = $connection->prepare("UPDATE ima_submissions SET status = ?, rejection_note = ? WHERE id = ?");
 	$update->bind_param("ssi", $status, $reason, $id);
 	$update->execute();
 	
@@ -423,7 +423,7 @@ function generate_word_count_stats()
 	return $stats;
 }
 
-$IMAGINALIEN_LAUNCH_DATE = '2013-05-06';
+$IMAGINALIEN_LAUNCH_DATE = '2013-04-25';
 /**
  * Returns a list of days on which the game was played between the two given dates.
  * @param $startDate (string, Y-m-d) Starting date for the game interval. Use $IMAGINALIEN_LAUNCH_DATE to get all days since the game started.
@@ -476,13 +476,29 @@ function output_game_days($startDate, $endDate, $targetPage)
 		<?php
 			foreach (retrieve_game_days($startDate, $endDate) as $date)
 			{
+				$dateObject = new DateTime($date);
 			?>
-				<li><a href="<?php echo $targetPage; ?>?date=<?php echo $date; ?>"><?php echo $date; ?></a></li>
+				<li><a href="<?php echo $targetPage; ?>?date=<?php echo $date; ?>"><?php echo $dateObject->format('D j M'); ?></a></li>
 			<?php
 			}
 		?>
 	</ul>
 <?php
+}
+
+/**
+ * Returns a string representation of the most recent weekday. If it is currently a weekday, it is today; if today is a weekend, it will be Friday.
+ */
+function most_recent_weekday()
+{
+	$today = new DateTime(date('Y-m-d'));
+	
+	while ($today->format('D') == 'Sun' or $today->format('D') == 'Sat')
+	{
+		$today->sub(new DateInterval('P1D'));
+	}
+	
+	return $today->format('Y-m-d');
 }
 
 /**

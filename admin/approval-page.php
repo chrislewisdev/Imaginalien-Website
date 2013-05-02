@@ -12,79 +12,81 @@
 	</head>
 	<body>
 	<div id="container">
-		<div id="nav">
-			<ul>
-				<li><a href="./index.php">Admin Home</a></li>
-				<?php 
-					if ($moderationStatus == 'U')
-					{
-					?>
-						<li><a href="./view-pending-submissions.php">Entries Pending Moderation</a></li>
-						<li><a href="./approved-submissions.php">Currently Approved Entries</a></li>
-						<li><a href="./rejected-submissions.php">Currently Rejected Entries</a></li>
-						<li><a href="./approval-page.php">Approval Page</a></li>
-					<?php	
-					}
-				?>
-				<li><a href="./score-adjustment.php">Player Score Adjustment</a></li>
-				<li><a href="./all-submissions.php?date=<?php echo date('Y-m-d'); ?>">See All Submissions</a></li>
-			</ul>
-		</div>
-	</div>
-	<div id="content">
-		<h1>Approval Page</h1>
-		
-		On this page you can complete the moderation process by finalising all moderated submissions. Once you hit Apply Moderation,
-		all approved photos will have their scores applied, and show up in the main website. All rejected submissions will be kept only
-		in the Admin area, under "See All Submissions".
-		
-		<h2>Submission Stats</h2>
-		Below are the stats for all photos submitted today.
-		
-		<table>
-			<thead>
-				<tr>
-					<th>Word</th>
-					<th>Times Used</th>
-				</tr>
-			</thead>
-			<tbody>
+		<div id="wrapper">
+			<div id="header">
 				<?php
-					$wordStats = generate_word_count_stats();
-					
-					foreach ($wordStats as $word => $usageCount)
-					{
-					?>
-						<tr>
-							<td><?php echo $word; ?></td>
-							<td><?php echo $usageCount; ?></td>
-						</tr>
-					<?php
-					}
+					ob_start();
+					include 'header.php';
+					$out = ob_get_contents();
+					ob_end_clean();
+					echo $out;
 				?>
-			</tbody>
-		</table>
-		
-		
-		<?php
-			$unmoderatedPhotos = count_unmoderated_submissions();
+			</div>
+			<div id="nav">
+				<?php
+					ob_start();
+					include 'navigation.php';
+					$out = ob_get_contents();
+					ob_end_clean();
+					echo $out;
+				?>
+			</div>
+		</div>
+		<div id="content">
+			<h1>Approval Page</h1>
 			
-			if ($unmoderatedPhotos == 0)
-			{
-			?>
-				<form name="apply-moderation" action="approval-confirmation.php" method="post">
-				<input type="submit" name="apply" value="Apply Moderation" />
-			</form>
+			On this page you can complete the moderation process by finalising all moderated submissions. Once you hit Apply Moderation,
+			all approved photos will have their scores applied, and show up in the main website. All rejected submissions will be kept only
+			in the Admin area, under "See All Submissions".
+			
+			<h2>Submission Stats</h2>
+			Below are the stats for all photos submitted today.
+			
+			<table>
+				<thead>
+					<tr>
+						<th>Word</th>
+						<th>Times Used</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+						$wordStats = generate_word_count_stats();
+						
+						foreach ($wordStats as $word => $usageCount)
+						{
+						?>
+							<tr>
+								<td><?php echo $word; ?></td>
+								<td><?php echo $usageCount; ?></td>
+							</tr>
+						<?php
+						}
+					?>
+				</tbody>
+			</table>
+			
+			
 			<?php
-			}
-			else
-			{
+				$unmoderatedPhotos = count_unmoderated_submissions();
+				
+				if ($unmoderatedPhotos == 0)
+				{
+				?>
+					<form name="apply-moderation" action="approval-confirmation.php" method="post">
+					<input type="submit" name="apply" value="Apply Moderation" />
+				</form>
+				<?php
+				}
+				else
+				{
+				?>
+					There are still <?php echo $unmoderatedPhotos; ?> submissions that need moderation. All submissions must be moderated before
+					the moderation process can be finished.
+				<?php
+				}
 			?>
-				There are still <?php echo $unmoderatedPhotos; ?> submissions that need moderation. All submissions must be moderated before
-				the moderation process can be finished.
-			<?php
-			}
-		?>
+		</div>
 	</div>
 	</body>
 </html>

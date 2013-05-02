@@ -51,25 +51,26 @@
 	</head>
 	<body>
 	<div id="container">
-		<div id="nav">
-			<ul>
-				<li><a href="./index.php">Admin Home</a></li>
-				<?php 
-					if ($moderationStatus == 'U')
-					{
-					?>
-						<li><a href="./view-pending-submissions.php">Entries Pending Moderation</a></li>
-						<li><a href="./approved-submissions.php">Currently Approved Entries</a></li>
-						<li><a href="./rejected-submissions.php">Currently Rejected Entries</a></li>
-						<li><a href="./approval-page.php">Approval Page</a></li>
-					<?php	
-					}
+		<div id="wrapper">
+			<div id="header">
+				<?php
+					ob_start();
+					include 'header.php';
+					$out = ob_get_contents();
+					ob_end_clean();
+					echo $out;
 				?>
-				<li><a href="./score-adjustment.php">Player Score Adjustment</a></li>
-				<li><a href="./all-submissions.php?date=<?php echo date('Y-m-d'); ?>">See All Submissions</a></li>
-			</ul>
+			</div>
+			<div id="nav">
+				<?php
+					ob_start();
+					include 'navigation.php';
+					$out = ob_get_contents();
+					ob_end_clean();
+					echo $out;
+				?>
+			</div>
 		</div>
-	</div>
 	<div id="content">
 		<!-- Moderation Display Code -->
 		Moderate this photo.<br />
@@ -105,13 +106,13 @@
 					Bonus Points: <input type="text" name="bonus_points" value="0" /> (use this to add on points for extra challenges, e.g. Catch-up Challenges)<br />
 					Submitted by <?php echo get_user_name($submission->accountID); ?><br />
 					Rejection Notes:<br />
-					<textarea name="rejection_notes" cols="40">Use this space to leave reasons for rejection if a submission is rejected. (max. 140 chars)</textarea><br />
+					<textarea name="rejection_notes" cols="40" rows="5">Use this space to leave reasons for rejection if a submission is rejected. (max. 140 chars)</textarea><br />
 					
 					<!-- Display all photo themes for the user -->
 					This photo was submitted during the following themes:
 					<ul>
 						<?php 
-							$themes = get_themes_for_day($submission->date);
+							$themes = get_themes_for_day($submission->submit_time);
 							foreach ($themes as $themes)
 							{
 							?>
@@ -128,6 +129,7 @@
 			<?php	
 			}
 		?>
+	</div>
 	</div>
 	</body>
 </html>

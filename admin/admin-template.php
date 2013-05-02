@@ -12,14 +12,28 @@
 	</head>
 	<body>
 	<div id="container">
-		<div id="nav">
-			<?php
-				ob_start();
-				include 'navigation.php';
-				$out = ob_get_contents();
-				ob_end_clean();
-				echo $out;
-			?>
+		<div id="wrapper">
+			<div id="header">
+				<?php
+					ob_start();
+					include 'header.php';
+					$out = ob_get_contents();
+					ob_end_clean();
+					echo $out;
+				?>
+			</div>
+			<div id="nav">
+				<?php
+					ob_start();
+					include 'navigation.php';
+					$out = ob_get_contents();
+					ob_end_clean();
+					echo $out;
+				?>
+			</div>
+		</div>
+		<div id="content">
+			
 		</div>
 	</div>
 	</body>

@@ -280,7 +280,7 @@ function output_submissions($submissions, $targetPage = "")
 					?><a href="./<?php echo $targetPage; ?>?id=<?php echo $submission->id; ?>"><?php
 				}
 			?>
-			<img src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_url; ?>" width="100" height="100" /><br />
+			<img src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_url; ?>" width="100" height="100" border="0" /><br />
 			<?php echo $submission->caption; ?>
 			<?php 
 				if ($targetPage != "") 

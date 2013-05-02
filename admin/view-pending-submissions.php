@@ -17,25 +17,28 @@
 	</head>
 	<body>
 	<div id="container">
-		<div id="nav">
-			<ul>
-				<li><a href="./index.php">Admin Home</a></li>
-				<?php 
-					if ($moderationStatus == 'U')
-					{
-					?>
-						<li><a href="./view-pending-submissions.php">Entries Pending Moderation</a></li>
-						<li><a href="./approved-submissions.php">Currently Approved Entries</a></li>
-						<li><a href="./rejected-submissions.php">Currently Rejected Entries</a></li>
-						<li><a href="./approval-page.php">Approval Page</a></li>
-					<?php	
-					}
+		<div id="wrapper">
+			<div id="header">
+				<?php
+					ob_start();
+					include 'header.php';
+					$out = ob_get_contents();
+					ob_end_clean();
+					echo $out;
 				?>
-				<li><a href="./score-adjustment.php">Player Score Adjustment</a></li>
-				<li><a href="./all-submissions.php?date=<?php echo date('Y-m-d'); ?>">See All Submissions</a></li>
-			</ul>
+			</div>
+			<div id="nav">
+				<?php
+					ob_start();
+					include 'navigation.php';
+					$out = ob_get_contents();
+					ob_end_clean();
+					echo $out;
+				?>
+			</div>
 		</div>
 		<div id="content">
+			<div class="submission-grid">
 			<?php
 				if (output_submissions(retrieve_submissions('UM'), 'moderate-photo.php') == 0)
 				{
@@ -46,6 +49,7 @@
 				<?php
 				}
 			?>
+			</div>
 		</div>
 	</div>
 	</body>

@@ -100,7 +100,7 @@
 				}
 			?>
 			<div id="register-login-content">
-				<div id="register-side">
+				<div id="register-side" class="row-light">
 					<h2>Sign Up</h2>
 					<form name="sign-up" action="./sign-up.php" method="post" class="aligned-form" onsubmit="return validateRegistration();">
 						<p>
@@ -116,6 +116,7 @@
 						<p><input type="submit" name="register" value="Join" class="button"/></p>
 					</form>
 				</div>
+				<hr class="mobile-only"/>
 				<div id="login-side">
 					<h2>Login</h2>
 					<form name="login" action="./sign-up.php" method="post" class="aligned-form" onsubmit="return validateLogin();">

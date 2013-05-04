@@ -43,15 +43,14 @@
 			ORDER BY `score` DESC";
 		}	
 		
-		echo "Daily Scores";
 		if($result = $connection->query($query))
 		{
-			echo "<tr><td>Account</td><td>Score</td></tr>";
+			echo "<tr><th>Account</th><th>Score</th></tr>";
 			while ($line = $result->fetch_row())
 			{
 	    		echo "<tr>"; 
-	       	 	echo " <td align='left'> $line[0] </td>"; 
-	        	echo " <td align='right'> $line[1] </td>"; 
+	       	 	echo " <td> $line[0] </td>"; 
+	        	echo " <td> $line[1] </td>"; 
 	        	echo "</tr>"; 
 	    	}
 			$result->close();
@@ -107,16 +106,15 @@
 			ORDER BY SUM(score) DESC";
 		}	
 		
-		echo "Weekly Scores";
 		if($result = $connection->query($query))
 		{
 			
-			echo "<tr><td>Account</td><td>Score</td></tr>";
+			echo "<tr><th>Account</th><th>Score</th></tr>";
 			while ($line = $result->fetch_row())
 			{
 	    		echo "<tr>"; 
-	       	 	echo " <td align='left'> $line[0] </td>"; 
-	        	echo " <td align='right'> $line[1] </td>"; 
+	       	 	echo " <td> $line[0] </td>"; 
+	        	echo " <td> $line[1] </td>"; 
 	        	echo "</tr>"; 
 	    	}
 			$result->close();
@@ -166,16 +164,15 @@
 			
 		}	
 		
-		echo "Overall Scores";
 		if($result = $connection->query($query))
 		{
 			
-			echo "<tr><td>Account</td><td>Score</td></tr>";
+			echo "<tr><th>Account</th><th>Score</th></tr>";
 			while ($line = $result->fetch_row())
 			{
 	    		echo "<tr>"; 
-	       	 	echo " <td align='left'> $line[0] </td>"; 
-	        	echo " <td align='right'> $line[1] </td>"; 
+	       	 	echo " <td> $line[0] </td>"; 
+	        	echo " <td> $line[1] </td>"; 
 	        	echo "</tr>"; 
 	    	}
 			$result->close();
@@ -233,15 +230,18 @@
 			<br/>
 		</div>
 		<div id="content">
-			<table border="1">
+			<h2 class="indented-heading">Daily Scores</h2>
+			<table>
 				<?php get_scoreboard_daily(10,null); ?>
 			</table>
 			<br/>
-			<table border="1">
+			<h2 class="indented-heading">Weekly Scores</h2>
+			<table>
 				<?php get_scoreboard_weekly(10,null); ?>
 			</table>
 			<br/>
-			<table border="1">
+			<h2 class="indented-heading">Overall Scores</h2>
+			<table>
 				<?php get_scoreboard_montly(10); ?>
 			</table>
 		</div>

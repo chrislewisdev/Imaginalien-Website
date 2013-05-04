@@ -37,8 +37,7 @@ form input:not([type=submit]) {display:block;
 .button:not(input) {font-weight: bold;
 					color: #ffc1c1;} 
 					
-#photo-button {
-			   display: block;
+#photo-button {display: block;
 			   color: #f37808;
 			   border: 2px solid #f37808;
 			   text-decoration: none;
@@ -46,3 +45,24 @@ form input:not([type=submit]) {display:block;
 			   margin-left: 40px;
 			   margin-right: 40px;
 			   margin-top: 10px;}
+			   
+#register-side {margin-bottom: 10px;}
+#login-side {margin-top: 10px;} 
+
+.row-light {background-color: #373737;
+		  padding-top: 5px;
+		  padding-bottom: 5px;}
+		  
+table {text-align: center;
+	   margin-left: auto;
+	   margin-right: auto;}
+
+table th, td{padding: 5px;
+			 text-align: center;
+			 padding-left: 50px;
+			 padding-right: 50px;}
+
+table th {color: white;}
+
+
+			 

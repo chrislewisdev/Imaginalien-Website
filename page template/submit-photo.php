@@ -8,7 +8,7 @@
 	if(! is_user_logged_in())
 	{
 		//redirect to login page
-		header("Location: http://www.imaginalien.com/sign-up.php"); /* Redirect browser */
+		header("Location: ./sign-up.php"); /* Redirect browser */
 		exit();
 	}
 	else

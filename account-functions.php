@@ -14,30 +14,37 @@ class AccountRecord
 {
 	/** ID (int) of the account on the database- not encrypted. */
 	public $id;
-	/** Email (string) of the account. This will be encrypted and should not be changed- store decrypted emails in temporary variables only. */
+	/** Email (string) of the account. Unencrypted */
 	public $email;
 	/** Display name (string) of the account- not encrypted. */
 	public $name;
-	/** Password (string) of the account. Again, this will be encrypted, only store decrypted information in temporary variables. */
-	public $password;
+	/** Total score of the account- not encrypted. */
+	public $score;
+	/** Salt for safe password storage. Cryptographically secure random number. See http://crackstation.net/hashing-security.htm for more details.*/
+	public $salt;
+	/** Hashed Password (string) of the account. Never decrypted, but checked against the result of crypt(hash+possiblePassword).*/
+	public $hashed_password;
 	
-	function __construct($_id, $_email, $_name, $_password)
+	function __construct($_id, $_email, $_name, $_hashed_password, $_score, $_salt)
 	{
 		$this->id = $_id;
 		$this->email = $_email;
 		$this->name = $_name;
-		$this->password = $_password;
+		$this->score = $_score;
+		$this->hashed_password = $_hashed_password;
+		$this->salt = $_salt;
+		
 	}
 }
 
 /**
- * Sets up a connection to the Imaginalien database, using Chris L's credentials.
+ * Sets up a connection to the Imaginalien database, using dev credentials.
  * @return A MySQLi connection object.
  * @throws A ConnectionException on error.
  */
 function connect()
 {
-	$connection = new mysqli('localhost', 'imaginal_chris', 'hagm201chris', 'imaginal_dev_chris_db');
+	$connection = new mysqli('localhost', 'imaginal_devs', 'hagm201', 'imaginal_data');
 	if ($connection->errno != 0)
 	{
 		throw new ConnectionException($connection->error);
@@ -58,13 +65,18 @@ function create_account($email, $displayName, $password)
 	//Connect to the Imaginalien database
 	$connection = connect();
 	
-	//TODO: Encrypt the email and password
-	$encryptedEmail = $email;
-	$encryptedPassword = $password;
-	
+	//'Salt' created using secure pseudo-random number generator.	
+	//We add this to thwart pre-calculation of hashed common passwords.
+	$salt = openssl_random_pseudo_bytes(4, $cstrong);	
+	$encodedSalt = base64_encode($salt);
+
+	//We only store the 'hash', not the supplied password.
+	//From that point on, we check against the hashed result of the salt+possible password.
+	$hashed_password = crypt($password, $encodedSalt);
+
 	//If no existing account was found, go ahead and insert the new record.
-	$insert = $connection->prepare("INSERT INTO ima_accounts(email, display_name, password) VALUES(?, ?, ?)");
-	$insert->bind_param("sss", $encryptedEmail, $displayName, $encryptedPassword);
+	$insert = $connection->prepare("INSERT INTO ima_accounts(email, display_name, salt, password) VALUES(?, ?, ?, ?)");
+	$insert->bind_param("ssss", $email, $displayName, $encodedSalt, $hashed_password);
 	if (!$insert->execute())
 	{
 		throw new AccountException($insert->error);
@@ -78,7 +90,7 @@ function create_account($email, $displayName, $password)
 }
 
 /** 
- * Retrieves full account info, identified by the specified e-mail.
+ * Retrieves full account info, identified by the specified e-mail or ID.
  * @param $email Email of the account to retrieve.
  * @param $id The ID of the account to retrieve. If this is specified, email will be ignored.
  * @return An Account object holding the DB info for the account.
@@ -99,7 +111,7 @@ function retrieve_account($email, $id = -1)
 		$select = $connection->prepare("SELECT * FROM ima_accounts WHERE id = ?");
 		$select->bind_param("s", $id);
 	}
-	$select->bind_result($dbID, $dbEmail, $dbName, $dbPassword);
+	$select->bind_result($dbID, $dbEmail, $dbName, $dbPassword, $dbScore, $dbSalt);
 	$select->execute();
 	$select->store_result();
 	//Check that we actually got a match
@@ -109,8 +121,7 @@ function retrieve_account($email, $id = -1)
 	}
 	$select->fetch();
 		
-	$account = new AccountRecord($dbID, $dbEmail, $dbName, $dbPassword);
-	
+	$account = new AccountRecord($dbID, $dbEmail, $dbName, $dbPassword, $dbScore, $dbSalt);
 	$select->close();
 	$connection->close();
 	
@@ -129,9 +140,10 @@ function login($email, $password)
 	$account = retrieve_account($email);
 	
 	//Authenticate against the password
-	//TODO: Decrypt the password from the database
-	$decryptedPassword = $account->password;
-	if ($password == $decryptedPassword)
+
+	$hashed_possible_password = crypt($password, $account->salt);
+	
+	if ($hashed_possible_password == $account->hashed_password)
 	{
 		//Set up the session data
 		$result = true;
@@ -178,16 +190,26 @@ function get_user_id()
 }
 
 /**
- * Convenience function to return the name of the currently logged in user.
+ * Convenience function to return the name of the currently logged in user, or if an ID is specified, the user with that ID.
+ * @param $id Optional ID to retrieve the name of a specific user.
  * @return The name of the current user as a string.
  * @throws AccountException if no-one is logged in.
  */
-function get_user_name()
+function get_user_name($id = -1)
 {
-	if (!is_user_logged_in()) throw new AccountException("Can't retrieve display name when no-one is logged in.");
-	else 
+	//If no ID was specified, get the ID of the current user
+	if ($id == -1)
 	{
-		return $_SESSION['imaginal_user_name'];
+		if (!is_user_logged_in()) throw new AccountException("Can't retrieve display name when no-one is logged in.");
+		else 
+		{
+			return $_SESSION['imaginal_user_name'];
+		}
+	}
+	else
+	{
+		$account = retrieve_account('not needed', $id);
+		return $account->name;
 	}
 }
 
@@ -196,18 +218,43 @@ function get_user_name()
  * @return The email of the current user.
  * @throws AccountException if no-one is logged in.
  */
-function get_user_email()
+function get_user_email($id = -1)
 {
-	if (!is_user_logged_in()) throw new AccountException("Can't retrieve user email when no-one is logged in.");
-	else
+	if ($id == -1)
 	{
-		$account = retrieve_account('not needed', get_user_id());
-		
-		//TODO: Decrypt the stored email
-		$decrypedEmail = $account->email;
-		
-		return $decrypedEmail;
+		if (!is_user_logged_in()) throw new AccountException("Can't retrieve user email when no-one is logged in.");
+		else 
+		{
+			$id = get_user_id();
+		}
 	}
+	
+	$account = retrieve_account('not needed', get_user_id());
+	
+	$decryptedEmail = $account->email;
+	
+	return $decryptedEmail;
+}
+
+/**
+ * Retrieves the score of the current user, or the user with the optional ID.
+ * @param $id (Optional) ID of the user to retrieve the score of.
+ * @return The integer email of the current user.
+ */
+function get_user_score($id = -1)
+{
+	if ($id == -1)
+	{
+		if (!is_user_logged_in()) throw new AccountException("Can't retrieve user score when no-one is logged in.");
+		else 
+		{
+			$id = get_user_id();
+		}
+	}
+	
+	$account = retrieve_account('not needed', get_user_id());
+	
+	return $account->score;
 }
 
 /**
@@ -226,5 +273,57 @@ function logout()
 			$_SESSION['imaginal_user_name'] = '';
 		}
 	}
+}
+
+/**
+ * Applies a once-off adjustment to the score of the specified player. The adjustment may be positive or negative, simply pass negative values to decrease player score.
+ * @param $id The ID of the user to adjust the score of.
+ * @param $adjustment The score adjustment to apply.
+ * @return true if the operation was applied successfully, false otherwise.
+ */
+function adjust_user_score($id, $adjustment)
+{
+	$connection = connect();
+	
+	$result = true;
+	
+	$update = $connection->prepare("UPDATE ima_accounts SET total_score = total_score + ? WHERE id = ?");
+	$update->bind_param("is", $adjustment, $id);
+	$update->execute();
+	
+	if ($update->affected_rows == 0)
+	{
+		$result = false;
+	}
+	
+	$connection->close();
+	
+	return $result;
+}
+
+/**
+ * Applies a once-off adjustment to the score of the specified player. The adjustment may be positive or negative, simply pass negative values to decrease player score.
+ * @param $name The name of the user to adjust the score of.
+ * @param $adjustment The score adjustment to apply.
+ * @return true if the operation was applied successfully, false otherwise.
+ */
+function adjust_user_score_by_name($name, $adjustment)
+{
+	$connection = connect();
+	
+	$result = true;
+	
+	$update = $connection->prepare("UPDATE ima_accounts SET total_score = total_score + ? WHERE display_name = ?");
+	$update->bind_param("is", $adjustment, $name);
+	$update->execute();
+	
+	if ($update->affected_rows == 0)
+	{
+		$result = false;
+	}
+	
+	$connection->close();
+	
+	return $result;
 }
 ?>

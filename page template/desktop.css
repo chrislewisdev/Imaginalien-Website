@@ -1,0 +1,178 @@
+@import url('common.css');
+
+body {background-image: url('./images/eye.png');
+	  background-position:107% 107%;
+	  background-attachment:fixed;
+	  background-repeat:no-repeat;
+	  background-size:250px 250px;}
+
+hr {margin-bottom: 10px;}
+
+h1, h2 {text-shadow: 2px 2px 4px #040404;
+	margin: 5px;
+	margin-bottom: 20px;}
+
+p, ol {margin: 20px;}
+ol {margin-left: 50px;}
+
+#container {width: 90%;
+			margin: 10px auto;
+			line-height: 130%;
+			min-width: 768px;}
+			
+#wrapper {position: relative; height: 140px;}
+
+/*header*/
+#header {position: absolute; left: 0; bottom:20px;}
+#facebook-icon {position: absolute;
+				right: 0px;
+				bottom: 40px;
+				overflow: auto;}
+
+/*navigation*/
+#nav {font-size: 18pt;
+	  font-weight: bold;
+	  text-shadow: 2px 2px 4px black;
+	  position: absolute;
+	  right: 0; bottom: 0;
+	  }
+
+#nav ul {overflow: auto;
+		 list-style-type: none;}
+		 
+#nav li {height: 25px;
+		 float: left;
+		 margin-right: 0px;
+		 padding: 0 20px;
+		 color: #ff8585;}
+
+#nav li:last-child {border-right: none;}
+
+#nav a {text-decoration: none;
+		color: #da3926;}
+		
+#nav a:visited {color: #da3926;}
+		  
+#nav a:hover {color: white;
+				transition-property:color;
+	  -moz-transition-property:color;
+	  -webkit-transition-property:color;
+	  -o-transition-property:color;
+	  
+	  transition-duration: .2s;
+	  -moz-duration: .2s;
+	  -webkit-duration: .2s;
+	  -o-transition: .2s;}
+					
+/*Login*/
+#daily-theme {margin: 3px;
+			  padding: 3px;
+			  margin-left: 40px;
+			  font-size: 15pt;
+			  font-style: italic;
+			  font-weight: bold;
+			  color: #f37808;}
+
+#login {clear: both;}
+
+#photo-button {margin-left: 20px;
+			   background: url(images/button-orange.jpg) repeat-x;}
+		
+/*Main content*/
+#content {margin-left: 100px;
+		  margin-right: 100px;
+		  padding: 2px 10px;
+		  background-color: rgba(20, 20, 20, .5);}
+		  
+/*Form*/
+form input {border-width: 2px;
+			border-color: black;
+			margin: 2px;
+			padding:4px;
+			background-color: white;
+			color: black;}
+			
+form input:focus {outline-color: #ff8585}
+
+
+
+.aligned-form input:not([type=submit]){width: 180px;
+					margin-bottom: 5px;}
+					
+.aligned-form label {float: left;
+					 width: 150px;
+					 font-weigth: bold;
+					 }
+
+#register-login-content
+{
+	max-width:800px;
+	margin-left:auto;
+	margin-right:auto;
+	height:300px;
+}
+#register-side
+{
+	float:left;
+	border-right:#ff8585 1px solid;
+}
+#login-side
+{
+	float:right;
+}
+
+/*Table*/
+table {margin-left: auto;
+	   margin-right: auto;
+	   width: 70%;}
+	   
+th, td {margin: 3px;
+		padding: 3px;
+		text-align: center;}
+		
+th {border-width: 0px;
+	border-bottom-width: 2px;
+	border-color: black;
+	border-style: solid;}
+	
+/* Misc classes*/
+.button {margin-bottom: 2px;
+		color: white;
+		background: url(images/button-red.jpg) repeat-x;  
+		width: 60px;
+		padding:6px 4px;  
+		text-align:center;  
+		border:1px solid #892525;  
+		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8);  
+		font-weight:bold;  
+		border-radius: 5px;  
+		text-decoration: none;  
+		opacity:.85;}
+				
+.button:hover {border-color: white;
+			   color: white;}
+
+.button:active {background-position:  0 -200px;  
+					text-shadow: 0 1px 0 rgba(0, 0, 0, 0.8);}
+					
+.button:visited {color: white;}
+					
+.mobile-only {display: none;}
+					
+.left-column {float: left;}
+.right-column {float:right;}
+
+#user-photo
+{
+	max-width:600px;
+	max-height:600px;
+}
+
+.game-dates li
+{
+	list-style:none;
+	list-style-type:none;
+	display:inline;
+	margin-left:5px;
+	font-size:85%;
+}

@@ -1,0 +1,48 @@
+@import url('common.css');
+
+ol {margin-left: 25px;}
+
+/*navigation*/
+#facebook-icon {display: block;
+				margin-left: auto;
+				margin-right: auto;}
+
+#nav {font-size: 18pt;
+	  font-weight: bold;}
+	  
+#nav ul {list-style-type: none;
+		 text-align: center;
+		 width: 100%;}
+
+#nav li {border-top: 2px solid #ff8585;
+		 border-top-width: 2px;
+		 border-color: #ff8585;
+		 text-decoration: none;}
+		 
+#nav li a{text-decoration: none;
+		  color: #ffc1c1;}
+		  
+#nav li a:hover {color: #ffc1c1;}
+#nav li a:visited {color: #ffc1c1;}
+
+#daily-theme {text-align: center;
+			  text-decoration: underline;
+			  color: #f37808;}
+		 
+form input:not([type=submit]) {display:block;
+			margin: 5px;}
+
+.desktop-only {display:none;}
+
+.button:not(input) {font-weight: bold;
+					color: #ffc1c1;} 
+					
+#photo-button {
+			   display: block;
+			   color: #f37808;
+			   border: 2px solid #f37808;
+			   text-decoration: none;
+			   text-align: center;
+			   margin-left: 40px;
+			   margin-right: 40px;
+			   margin-top: 10px;}

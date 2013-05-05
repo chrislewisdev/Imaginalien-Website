@@ -124,16 +124,25 @@ form input:focus {outline-color: #ff8585}
 /*Table*/
 table {margin-left: auto;
 	   margin-right: auto;
-	   width: 70%;}
+	   width: 50%;
+		border-spacing: 0px}
+		
+
 	   
-th, td {margin: 3px;
-		padding: 3px;
+	   
+th, td {padding: 3px;
+		margin: 0px;
 		text-align: center;}
 		
-th {border-width: 0px;
-	border-bottom-width: 2px;
-	border-color: black;
-	border-style: solid;}
+th {border-top: 1px solid black;
+		border-bottom: 2px solid black;
+		border-collapse: collapse;
+		background-color: #252525;}
+		
+td {border-bottom: 2px solid black;
+	border-collapse: collapse;}
+		
+th {color: white;}
 	
 /* Misc classes*/
 .button {margin-bottom: 2px;
@@ -161,6 +170,8 @@ th {border-width: 0px;
 					
 .left-column {float: left;}
 .right-column {float:right;}
+
+.indented-heading {margin-left: 200px;}
 
 #user-photo
 {

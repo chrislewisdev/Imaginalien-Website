@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
-	
-<head>
 <?php
 	/**
 	 * Gets the scoreboard from the DB to be displayed as html in a table. 
 	 * @param number_of_scores, the number of scores you want returned i.e. top 10 etc. 0 means return all.
-	 * @param today, the date that we want the results for.
+	 * @param today, the date in (2013-12-31 format) that we want the results for.
 	 * @return rows, returns all the rows selected from the table.
 	 */
 	function get_scoreboard_daily($number_of_scores,$today)
@@ -17,9 +13,9 @@
 			$today = date("Y-m-d");
 		}
 		
-		$connection = new mysqli('localhost', 'imaginal_joe', 'hagm201joe', 'imaginal_dev_joe_db');
+		$connection = new mysqli('localhost', 'imaginal_devs', 'hagm201', 'imaginal_data');
 		
-		/* check connection */
+		// check connection
 		if ($connection->connect_errno)
 		{
     		printf("Connect failed: %s\n", $mysqli->connect_error);
@@ -47,10 +43,9 @@
             		  ORDER BY SUM(`score`) DESC";
 		}		
 		
-		echo "Daily Scores";
+		echo "<tr><td>Account</td><td>Score</td></tr>";
 		if($result = $connection->query($query))
 		{
-			echo "<tr><td>Account</td><td>Score</td></tr>";
 			while ($line = $result->fetch_row())
 			{
 	    		echo "<tr>"; 
@@ -59,10 +54,6 @@
 	        	echo "</tr>"; 
 	    	}
 			$result->close();
-		}
-		else
-		{
-			printf("No Result"); 
 		}
 		$connection->close();
 	}
@@ -81,9 +72,9 @@
 			$week = date("W")-1;
 		}		
 		
-		$connection = new mysqli('localhost', 'imaginal_joe', 'hagm201joe', 'imaginal_dev_joe_db');
+		$connection = new mysqli('localhost', 'imaginal_devs', 'hagm201', 'imaginal_data');
 		
-		/* check connection */
+		// check connection
 		if ($connection->connect_errno)
 		{
     		printf("Connect failed: %s\n", $mysqli->connect_error);
@@ -112,11 +103,11 @@
                       ORDER BY SUM(score) DESC";
 		}	
 		
-		echo "Weekly Scores";
+		echo "<tr><td>Account</td><td>Score</td></tr>";
 		if($result = $connection->query($query))
 		{
 			
-			echo "<tr><td>Account</td><td>Score</td></tr>";
+			
 			while ($line = $result->fetch_row())
 			{
 	    		echo "<tr>"; 
@@ -125,10 +116,6 @@
 	        	echo "</tr>"; 
 	    	}
 			$result->close();
-		}
-		else
-		{
-			printf("No Result"); 
 		}
 		$connection->close();
 	}
@@ -141,7 +128,7 @@
 	 */
 	function get_scoreboard_montly($number_of_scores)
 	{
-		$connection = new mysqli('localhost', 'imaginal_joe', 'hagm201joe', 'imaginal_dev_joe_db');
+		$connection = new mysqli('localhost', 'imaginal_devs', 'hagm201', 'imaginal_data');
 		
 		/* check connection */
 		if ($connection->connect_errno)
@@ -169,14 +156,11 @@
 			          WHERE STATUS =  've' and ima_submissions.account_id = ima_accounts.id
 			          GROUP BY display_name
                       ORDER BY SUM(score) DESC ";
-			
 		}	
 		
-		echo "Overall Scores";
+		echo "<tr><td>Account</td><td>Score</td></tr>";
 		if($result = $connection->query($query))
 		{
-			
-			echo "<tr><td>Account</td><td>Score</td></tr>";
 			while ($line = $result->fetch_row())
 			{
 	    		echo "<tr>"; 
@@ -186,25 +170,79 @@
 	    	}
 			$result->close();
 		}
-		else
-		{
-			printf("No Result"); 
-		}
 		$connection->close();
 	}
 ?>
-</head>
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=320"/>
+		<title>Imaginalien</title>
+		<link rel="stylesheet" media="only screen and (max-width: 400px)" href="mobile-device.css"/>
+		<link rel="stylesheet" media="only screen and (min-width: 401px)" href="desktop.css"/>
+		<link rel="icon" type="image/ico" href="images/icon.ico"/>
+		<script type="text/javascript" src="validation.js"></script>
+	</head>
 	<body>
-		<table border="1">
-			<?php get_scoreboard_daily(10,null); ?>
-		</table>
-		<br/>
-		<table border="1">
-			<?php get_scoreboard_weekly(10,null); ?>
-		</table>
-		<br/>
-		<table border="1">
-			<?php get_scoreboard_montly(10); ?>
-		</table>
-	</body>	
+	<div id="container">
+	<div id="wrapper">
+		<div id="header">
+			<?php
+				ob_start();
+				include 'header.php';
+				$out = ob_get_contents();
+				ob_end_clean();
+				echo $out;
+			?>
+		</div>
+		<div id="nav">
+			<?php
+				ob_start();
+				include 'navigation.php';
+				$out = ob_get_contents();
+				ob_end_clean();
+				echo $out;
+			?>
+		</div>
+	</div>
+		<div id="login">
+			<hr/>
+			<br/>
+			<?php
+				ob_start();
+				include 'login.php';
+				$out = ob_get_contents();
+				ob_end_clean();
+				echo $out;
+			?>
+			<br/>
+		</div>
+		<div id="content">
+			<h2 class="indented-heading">Daily Scores</h2>
+			<table>
+				<?php get_scoreboard_daily(10,null); ?>
+			</table>
+			<br/>
+			<h2 class="indented-heading">Weekly Scores</h2>
+			<table>
+				<?php get_scoreboard_weekly(10,null); ?>
+			</table>
+			<br/>
+			<h2 class="indented-heading">Overall Scores</h2>
+			<table>
+				<?php get_scoreboard_montly(10); ?>
+			</table>
+		</div>
+		<div id="footer">
+			<?php
+				ob_start();
+				include 'footer.php';
+				$out = ob_get_contents();
+				ob_end_clean();
+				echo $out;
+			?>
+		</div>
+	</div>
+	</body>
 </html>

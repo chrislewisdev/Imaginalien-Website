@@ -92,7 +92,7 @@ function checkSubmissionCount($id)
 	
 	if (!$connection)
 	{
-		echo "Connection error.";
+		throw new ConnectionException("Database connection could not be established.");
 	}
 	
 	$stmt = $connection->prepare("SELECT caption FROM ima_submissions WHERE submit_time=? AND account_id=?"); 
@@ -122,6 +122,7 @@ function storeInServer()
 	if (file_exists($url))
 	{
 		//Should not occur now the server appends the date to each file.
+		throw new Exception("Duplicate filename detected, image not saved.");
 	}
 	else
 	{

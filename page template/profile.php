@@ -63,10 +63,11 @@
 				<h1><?php echo get_user_name(); ?></h1>
 				<p><strong>Your Score: <?php echo get_user_score(); ?></strong></p>
 			</div>
+			<hr/>
 			<div id="user-submissions">
-				<h1>Your Submissions</h1>
+				<h2>Your Submissions</h2>
 				
-				<h2>Pending Moderation</h2>
+				<h3>Pending Moderation</h3>
 				<p>Submissions that show up here have not yet been checked by our moderators. Moderation is done every weeknight, so they should show up soon!</p>
 				<div class="submission-grid">
 					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'P'), 'view-submission.php'); ?>
@@ -75,13 +76,13 @@
 					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'UR'), 'view-submission.php'); ?>
 				</div>
 				
-				<h2>Approved</h2>
+				<h3>Approved</h3>
 				<p>All submissions that show up here have been given the A-OK by our moderators, and have granted you points. Hurray!</p>
 				<div class="submission-grid">
 					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'A'), 'view-submission.php'); ?>
 				</div>
 				
-				<h2>Rejected</h2>
+				<h3>Rejected</h3>
 				<p>If any of your submissions are rejected by moderators, they will show up here. You can click on each submission to view it and see why it was rejected.</p>
 				<div class="submission-grid">
 					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'R'), 'view-submission.php'); ?>

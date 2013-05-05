@@ -53,7 +53,8 @@
 			<br/>
 		</div>
 		<div id="content">
-			Thanks for your submission! You have <?php echo 3 -  checkSubmissionCount(get_user_id()); ?> submissions remaining today.
+			<p><strong>Thanks for the intel!</strong></p> 
+			<p>You have <strong><?php echo 3 -  checkSubmissionCount(get_user_id()); ?></strong> photos remaining today.<p>
 		</div>
 		<div id="footer">
 			<?php

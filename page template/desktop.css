@@ -15,6 +15,10 @@ h1, h2 {text-shadow: 2px 2px 4px #040404;
 p, ol {margin: 20px;}
 ol {margin-left: 50px;}
 
+strong {color: white;
+		font-size: 14pt;
+		font-weight: bold;}
+
 #container {width: 90%;
 			margin: 10px auto;
 			line-height: 130%;

@@ -83,8 +83,8 @@
 					if ($submission->status == 'R')
 					{
 					?>
-						This submission was rejected by our moderators.<br />
-						Reason: <?php echo $submission->rejectionNote; ?><br />
+						<p>This submission was rejected by our moderators.<br />
+						Reason: <?php echo $submission->rejectionNote; ?><br /></p>
 					<?php
 					}
 				?>

@@ -105,7 +105,7 @@
 					<form name="sign-up" action="./sign-up.php" method="post" class="aligned-form" onsubmit="return validateRegistration();">
 						<p>
 							<label for="display_name">Username:</label> <input type="text" id="register-email" name="display_name" size="20"/><br />
-							<label for="email">Email address:</label> <input type="text" id="register-name" name="email" size="40"/>
+							<label for="email">Email address:</label> <input type="text" id="register-name" name="email" size="36"/>
 						</p>
 						
 						<p>
@@ -121,7 +121,7 @@
 					<h2>Login</h2>
 					<form name="login" action="./sign-up.php" method="post" class="aligned-form" onsubmit="return validateLogin();">
 						<p>
-							<label for="email">Email address:</label> <input type="text" id="login-email" name="email" size="40"/><br />
+							<label for="email">Email address:</label> <input type="text" id="login-email" name="email" size="36"/><br />
 							<label for="password">Password:</label> <input type="password" id="login-password" name="password" size="20"/>
 						</p>
 						

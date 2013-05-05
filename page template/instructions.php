@@ -45,6 +45,7 @@
 			<br/>
 		</div>
 		<div id="content">
+		<img src="images/Kodack.png" width="244" height="496" class="right-column desktop-only"/>
 			<h1>Instructions</h1>
 			Getting started with Imaginalien is simple:
 			

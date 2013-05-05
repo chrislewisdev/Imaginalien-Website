@@ -54,7 +54,7 @@
 			<br/>
 		</div>
 		<div id="content">
-			<h1>Gallery: <?php $dateObject = new DateTime($targetDate); echo $dateObject->format('D j M'); ?></h1>
+			<h1>Intel: <?php $dateObject = new DateTime($targetDate); echo $dateObject->format('D j M'); ?></h1>
 			<?php
 				output_game_days($IMAGINALIEN_LAUNCH_DATE, date('Y-m-d'), './gallery.php');
 			?>

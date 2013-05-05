@@ -44,7 +44,8 @@ ol {margin-left: 50px;}
 		 float: left;
 		 margin-right: 0px;
 		 padding: 0 20px;
-		 color: #ff8585;}
+		 color: #ff8585;
+		 border: none;}
 
 #nav li:last-child {border-right: none;}
 

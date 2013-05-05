@@ -14,3 +14,4 @@
 	<li><a href="./score-adjustment.php">Player Score Adjustment</a></li>
 	<li><a href="./all-submissions.php?date=<?php echo date('Y-m-d'); ?>">See All Submissions</a></li>
 </ul>
+<hr id="nav-sep"/>

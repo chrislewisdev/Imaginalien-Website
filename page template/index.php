@@ -60,6 +60,7 @@
 				the challenge. Players must strive for the highest score in order to win the ultimate title, 
 				<strong>Minion of the Month!</strong>
 			</p>	
+			<img src="images/polaroids.png" class="center-image desktop-only" width="474" height="200"/>
 		</div>
 		<div id="footer">
 			<?php

@@ -10,7 +10,7 @@
 			$moderationStatus = get_moderation_status();
 			
 			$targetDate = $_GET['date'];
-			$dates = retrieve_game_days('2013-04-28', date('Y-m-d'));
+			$dates = retrieve_game_days('2013-05-06', date('Y-m-d'));
 		?>
 	</head>
 	<body>
@@ -45,7 +45,7 @@
 						<li><a href="all-submissions.php?date=<?php echo $date; ?>"><?php echo $date; ?></a></li>
 					<?php
 					}*/
-					output_game_days('2013-04-28', date('Y-m-d'), 'all-submissions.php');
+					output_game_days('2013-05-06', date('Y-m-d'), 'all-submissions.php');
 				?>
 			</ul>
 			<h1>Approved Entries</h1>

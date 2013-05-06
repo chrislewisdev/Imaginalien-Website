@@ -48,7 +48,7 @@
 	//If a login/register was successfully processed, redirect to the user profile page
 	if ($loginSuccess)
 	{
-		header('Location: http://dev.imaginalien.com/page-test/profile.php');
+		header('Location: ./profile.php');
 	}
 ?>
 <!DOCTYPE html>

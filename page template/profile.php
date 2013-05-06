@@ -4,7 +4,7 @@
 	
 	if (!is_user_logged_in())
 	{
-		header('Location: http://dev.imaginalien.com/page-test/sign-up.php');
+		header('Location: ./sign-up.php');
 	}
 	
 	$targetDate = date('Y-m-d');

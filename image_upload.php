@@ -26,7 +26,7 @@ function attemptSubmission()
 	if(! is_user_logged_in())
 	{
 		//redirect to login page
-		header("Location: http://www.imaginalien.com/login.php"); /* Redirect browser */
+		header("Location: ./login.php"); /* Redirect browser */
 		exit();
 	}
 	else

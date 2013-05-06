@@ -67,6 +67,7 @@ function set_moderation_status($status)
 	$update->bind_param("s", $status);
 	$update->execute();
 	
+	$update->close();
 	$connection->close();
 }
 
@@ -423,7 +424,7 @@ function generate_word_count_stats()
 	return $stats;
 }
 
-$IMAGINALIEN_LAUNCH_DATE = '2013-04-25';
+$IMAGINALIEN_LAUNCH_DATE = '2013-05-06';
 /**
  * Returns a list of days on which the game was played between the two given dates.
  * @param $startDate (string, Y-m-d) Starting date for the game interval. Use $IMAGINALIEN_LAUNCH_DATE to get all days since the game started.
@@ -518,5 +519,20 @@ function count_unmoderated_submissions()
 	$connection->close();
 	
 	return $count;
+}
+
+function get_recent_submitted_date()
+{
+	$connection = connect();
+	
+	$select = $connection->prepare("SELECT MAX(submit_time) FROM ima_submissions WHERE status = 'A'");
+	$select->bind_result($recentDate);
+	$select->execute();
+	$select->store_result();
+	$select->fetch();
+	
+	$connection->close();
+	
+	return $recentDate;
 }
 ?>

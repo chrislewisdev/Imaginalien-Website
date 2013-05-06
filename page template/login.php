@@ -1,6 +1,7 @@
 <form name="login" action="./sign-up.php" method="post" onsubmit="return validateLogin();">
 	<?php
 		require_once("account-functions.php");
+		require_once("theme-functions.php");
 		//Only output login/register buttons if user is logged in
 		if (!is_user_logged_in())
 		{
@@ -23,4 +24,4 @@
 	<a href="submit-photo.php" title="Submit Photo" class="button" id="photo-button">Submit Photo</a>
 </form>
 <br class="mobile-only"/>
-<p id="daily-theme">Todays mission: The letter P</p>
+<p id="daily-theme">Today's mission: '<?php echo get_daily_theme(); ?>'</p>

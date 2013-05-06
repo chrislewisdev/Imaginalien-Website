@@ -2,7 +2,7 @@
 	/**
 	 * Gets the scoreboard from the DB to be displayed as html in a table. 
 	 * @param number_of_scores, the number of scores you want returned i.e. top 10 etc. 0 means return all.
-	 * @param today, the date in (2013-12-31 format) that we want the results for.
+	 * @param today, the date in (Y-m-d format) that we want the results for.
 	 * @return rows, returns all the rows selected from the table.
 	 */
 	function get_scoreboard_daily($number_of_scores,$today)

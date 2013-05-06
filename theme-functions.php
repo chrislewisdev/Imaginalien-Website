@@ -48,4 +48,23 @@ function get_themes_for_day($date)
 	
 	return $themes;
 }
+
+function get_daily_theme()
+{
+	$connection = connect();
+	
+	$date = date('Y-m-d');
+	
+	$select = $connection->prepare("SELECT theme FROM ima_themes WHERE date = ? AND type = 'D'");
+	$select->bind_param("s", $date);
+	$select->bind_result($dbDescription);
+	$select->execute();
+	
+	$select->store_result();
+	$select->fetch();
+	
+	$connection->close();
+	
+	return $dbDescription;
+}
 ?>

@@ -17,6 +17,11 @@
 			require_once("theme-functions.php");
 			$moderationStatus = get_moderation_status();
 			
+			//Retrieve the photo to edit by the ID passed via GET
+			$id = $_GET['id'];
+			
+			$submission = retrieve_submission($id);
+			
 			//If an approval/rejection is requested, process it
 			if (isset($_POST['approve']))
 			{
@@ -76,11 +81,6 @@
 		Moderate this photo.<br />
 		<?php
 			
-			//Retrieve the photo to edit by the ID passed via GET
-			$id = $_GET['id'];
-			
-			$submission = retrieve_submission($id);
-			
 			if (isset($_POST['approve']))
 			{
 				?>The submission was successfully approved. <a href="./view-pending-submissions.php">Return to pending submissions</a><br /><?php
@@ -106,10 +106,10 @@
 					Bonus Points: <input type="text" name="bonus_points" value="0" /> (use this to add on points for extra challenges, e.g. Catch-up Challenges)<br />
 					Submitted by <?php echo get_user_name($submission->accountID); ?><br />
 					Rejection Notes:<br />
-					<textarea name="rejection_notes" cols="40" rows="5">Use this space to leave reasons for rejection if a submission is rejected. (max. 140 chars)</textarea><br />
+					<textarea name="rejection_notes" cols="40" rows="5"></textarea><br />
 					
 					<!-- Display all photo themes for the user -->
-					This photo was submitted during the following themes:
+					This photo was submitted during the following themes: (<?php echo date('Y-m-d'); ?>)
 					<ul>
 						<?php 
 							$themes = get_themes_for_day($submission->submit_time);
@@ -123,8 +123,15 @@
 					</ul>
 					
 					<input type="hidden" name="id" value="<?php echo $submission->id; ?>" />
-					<input type="submit" name="approve" value="Approve Submission" />
-					<input type="submit" name="reject" value="Reject Submission" />
+					<?php
+						if ($submission->status != 'A' and $submission->status != 'R')
+						{
+						?>
+							<input type="submit" name="approve" value="Approve Submission" />
+							<input type="submit" name="reject" value="Reject Submission" />
+						<?php
+						}
+					?>
 				</form>
 			<?php	
 			}

@@ -1,11 +1,14 @@
 <?php 
 	session_start();
-	require_once("admin-functions.php"); 
-	
+	require_once("admin-functions.php"); 
 	$targetDate = most_recent_weekday();
 	if (isset($_GET['date']))
 	{
 		$targetDate = $_GET['date'];
+	}
+	else 
+	{
+		$targetDate = get_recent_submitted_date();
 	}
 ?>
 <!DOCTYPE html>
@@ -56,7 +59,7 @@
 		<div id="content">
 			<h1>Intel: <?php $dateObject = new DateTime($targetDate); echo $dateObject->format('D j M'); ?></h1>
 			<?php
-				output_game_days($IMAGINALIEN_LAUNCH_DATE, date('Y-m-d'), './gallery.php');
+				output_game_days('2013-05-06', date('Y-m-d'), './gallery.php');
 			?>
 			<br />
 			<div id="user-submissions">
@@ -64,7 +67,6 @@
 					<?php output_submissions(retrieve_submissions('A', $targetDate), 'view-submission.php'); ?>
 				</div>
 			</div>
-			
 		</div>
 		<div id="footer">
 			<?php

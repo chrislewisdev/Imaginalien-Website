@@ -14,20 +14,20 @@ ol {margin-left: 25px;}
 		 text-align: center;
 		 width: 100%;}
 
-#nav li {border-top: 2px solid #ff8585;
+#nav li {border-top: 2px solid #003f85;
 		 border-top-width: 2px;
-		 border-color: #ff8585;
+		 border-color: #003f85;
 		 text-decoration: none;}
 		 
 #nav li a{text-decoration: none;
-		  color: #ffc1c1;}
+		  color: #3a8fef;}
 		  
-#nav li a:hover {color: #ffc1c1;}
-#nav li a:visited {color: #ffc1c1;}
+#nav li a:hover {color: #3a8fef;}
+#nav li a:visited {color: #3a8fef;}
 
 #daily-theme {text-align: center;
 			  text-decoration: underline;
-			  color: #f37808;}
+			  color: #004ea6;}
 		 
 form input:not([type=submit]) {display:block;
 			margin: 5px;}
@@ -35,11 +35,11 @@ form input:not([type=submit]) {display:block;
 .desktop-only {display:none;}
 
 .button:not(input) {font-weight: bold;
-					color: #ffc1c1;} 
+					color: #003f85;} 
 					
 #photo-button {display: block;
-			   color: #f37808;
-			   border: 2px solid #f37808;
+			   color: #0072ff;
+			   border: 2px solid #0072ff;
 			   text-decoration: none;
 			   text-align: center;
 			   margin-left: 40px;
@@ -62,7 +62,7 @@ table th, td{padding: 5px;
 			 padding-left: 50px;
 			 padding-right: 50px;}
 
-table th {color: white;}
+table th {color: white;	   background-color: #343434;}
 
 
 			 

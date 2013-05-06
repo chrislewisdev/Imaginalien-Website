@@ -33,10 +33,11 @@ function get_themes_for_day($date)
 {
 	$connection = connect();
 	
-	$select = $connection->prepare("SELECT * FROM ima_themes WHERE date = ?");
+	$select = $connection->prepare("SELECT * FROM ima_themes WHERE theme_date = ?");
 	$select->bind_param("s", $date);
 	$select->bind_result($dbDate, $dbDescription, $dbType);
 	$select->execute();
+	$select->store_result();
 	
 	$themes = array();
 	while ($select->fetch())
@@ -55,7 +56,7 @@ function get_daily_theme()
 	
 	$date = date('Y-m-d');
 	
-	$select = $connection->prepare("SELECT theme FROM ima_themes WHERE date = ? AND type = 'D'");
+	$select = $connection->prepare("SELECT theme FROM ima_themes WHERE theme_date = ? AND type = 'D'");
 	$select->bind_param("s", $date);
 	$select->bind_result($dbDescription);
 	$select->execute();

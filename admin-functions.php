@@ -31,6 +31,7 @@ class SubmissionRecord
 	{
 		$this->id = $_id;
 		$this->accountID = $_accountID;
+		$this->submit_time = $_submit_time;
 		$this->image_url = $_image_url;
 		$this->score = $_score;
 		$this->caption = $_caption;
@@ -281,7 +282,7 @@ function output_submissions($submissions, $targetPage = "")
 					?><a href="./<?php echo $targetPage; ?>?id=<?php echo $submission->id; ?>"><?php
 				}
 			?>
-			<img src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_url; ?>" width="100" height="100" border="0" /><br />
+			<img src="http://imaginalien.com/<?php echo $submission->image_url; ?>" width="100" height="100" border="0" /><br />
 			<?php echo $submission->caption; ?>
 			<?php 
 				if ($targetPage != "") 

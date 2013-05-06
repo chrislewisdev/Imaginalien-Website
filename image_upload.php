@@ -47,6 +47,8 @@ function attemptSubmission()
 			//Store URL and similar in database
 			storeInDatabase($url);
 			
+			return $url;
+			
 			//Send response: 'Thanks! You have X more photos remaining today!'
 			//header("Location: http://www.imaginalien.com/anotherGo.php"); /* Redirect browser */
 			//exit();

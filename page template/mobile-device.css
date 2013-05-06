@@ -64,5 +64,10 @@ table th, td{padding: 5px;
 
 table th {color: white;	   background-color: #343434;}
 
+#user-photo
+{
+	max-width:300px;
+	max-height:300px;
+}
 
 			 

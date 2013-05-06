@@ -51,6 +51,13 @@
 				
 				document.getElementById('word_score').innerHTML = score.toString();
 			}
+			
+			function googleIt()
+			{
+				var queryString = document.getElementById('caption').value.replace(' ', '+');
+				
+				window.open("http://www.google.com.au/search?q=" + queryString, "_blank");
+			}
 			//]]>
 		</script>
 	</head>
@@ -100,8 +107,8 @@
 			{
 			?>
 				<form name="photo-moderation" action="moderate-photo.php?id=<?php echo $submission->id; ?>" method="post">
-					<img id="user-photo" src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_url; ?>" /><br />
-					Caption: <input type="text" id="caption" name="final_caption" value="<?php echo $submission->caption; ?>" onchange="updateCaptionScore();" /> (apply word corrections if necessary)<br />
+					<img id="user-photo" src="http://imaginalien.com/<?php echo $submission->image_url; ?>" /><br />
+					Caption: <input type="text" id="caption" name="final_caption" value="<?php echo $submission->caption; ?>" onchange="updateCaptionScore();" /> <button type="button" onclick="googleIt();">Google It!</button> (apply word corrections if necessary)<br />
 					Score: <span id="word_score"><?php echo get_word_length($submission->caption); ?></span> (this is the score the player will get purely from their word)<br />
 					Bonus Points: <input type="text" name="bonus_points" value="0" /> (use this to add on points for extra challenges, e.g. Catch-up Challenges)<br />
 					Submitted by <?php echo get_user_name($submission->accountID); ?><br />
@@ -109,11 +116,11 @@
 					<textarea name="rejection_notes" cols="40" rows="5"></textarea><br />
 					
 					<!-- Display all photo themes for the user -->
-					This photo was submitted during the following themes: (<?php echo date('Y-m-d'); ?>)
+					This photo was submitted during the following themes: (<?php echo $submission->submit_time; ?>)
 					<ul>
 						<?php 
 							$themes = get_themes_for_day($submission->submit_time);
-							foreach ($themes as $themes)
+							foreach ($themes as $theme)
 							{
 							?>
 								<li><?php echo $theme->description; ?></li>

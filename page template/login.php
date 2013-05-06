@@ -2,12 +2,13 @@
 	<?php
 		require_once("account-functions.php");
 		require_once("theme-functions.php");
+
 		//Only output login/register buttons if user is logged in
 		if (!is_user_logged_in())
 		{
 		?>
-			<label for="login-email" class="mobile-only">Email: </label><input type="text" id="login-email" name="email" placeholder="email"/>
-			<label for="login-password" class="mobile-only">Password: </label><input type="password" id="login-password" name="password" placeholder="password"/>
+			<label for="login-email" >Email: </label><input type="text" id="login-email" name="email" placeholder="email"/>
+			<label for="login-password" >Password: </label><input type="password" id="login-password" name="password" placeholder="password" class="input-text"/>
 			<input type="submit" name="login" value="Login" class="button"/>
 			<a href="sign-up.php" title="Register" class="button">Register</a>
 		<?php

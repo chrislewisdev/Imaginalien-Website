@@ -4,30 +4,38 @@ body {background-image: url('./images/eye.png');
 	  background-position:107% 107%;
 	  background-attachment:fixed;
 	  background-repeat:no-repeat;
-	  background-size:250px 250px;}
+	  background-size:250px 250px;
+
+      align-content:center;
+}
 
 hr {margin-bottom: 10px;}
 
-h1, h2 {text-shadow: 2px 2px 4px #040404;
+h1, h2 {//text-shadow: 2px 2px 4px #040404;
 	margin: 5px;
 	margin-bottom: 20px;}
 
-p, ol {margin: 20px;}
-ol {margin-left: 50px;}
+p, ol {margin: 0px;
+       margin-left:0px;
+       margin-bottom:20px;
+}
+ol {margin-left: 00px;}
 
-strong {color: white;
+strong {color: black;
 		font-size: 14pt;
 		font-weight: bold;}
 
-#container {width: 90%;
-			margin: 10px auto;
+#container {width: 70%;
+			margin: 0px auto;
 			line-height: 130%;
-			min-width: 768px;}
+			min-width: 800px;
+            max-width:800;
+}
 			
 #wrapper {position: relative; height: 140px;}
 
 /*header*/
-#header {position: absolute; left: 0; bottom:20px;}
+#header {position: absolute; left: 0; bottom:15px;}
 #facebook-icon {position: absolute;
 				right: 0px;
 				bottom: 40px;
@@ -36,7 +44,7 @@ strong {color: white;
 /*navigation*/
 #nav {font-size: 18pt;
 	  font-weight: bold;
-	  text-shadow: 2px 2px 4px black;
+	  //text-shadow: 2px 2px 4px black;
 	  position: absolute;
 	  right: 0; bottom: 0;
 	  }
@@ -58,7 +66,7 @@ strong {color: white;
 		
 #nav a:visited {color: #da3926;}
 		  
-#nav a:hover {color: white;
+#nav a:hover {    color: #892525;
 				transition-property:color;
 	  -moz-transition-property:color;
 	  -webkit-transition-property:color;
@@ -70,10 +78,10 @@ strong {color: white;
 	  -o-transition: .2s;}
 					
 /*Login*/
-#daily-theme {margin: 3px;
+#daily-theme {    //margin: 3px;
 			  padding: 3px;
-			  margin-left: 40px;
-			  font-size: 15pt;
+			 // margin-left: 40px;
+			  font-size: 17pt;
 			  font-style: italic;
 			  font-weight: bold;
 			  color: #f37808;}
@@ -84,17 +92,17 @@ strong {color: white;
 			   background: url(images/button-orange.jpg) repeat-x;}
 		
 /*Main content*/
-#content {margin-left: 100px;
-		  margin-right: 100px;
+#content {//margin-left: 100px;
+		  //margin-right: 100px;
 		  padding: 2px 10px;
-		  background-color: rgba(20, 20, 20, .5);}
+		  background-color: white;}
 		  
 /*Form*/
 form input {border-width: 2px;
 			border-color: black;
 			margin: 2px;
 			padding:4px;
-			background-color: white;
+			background-color: #f5f5f5;
 			color: black;}
 			
 form input:focus {outline-color: #ff8585}
@@ -108,6 +116,10 @@ form input:focus {outline-color: #ff8585}
 					 width: 150px;
 					 font-weigth: bold;
 					 }
+
+.input-text {height: 18px;
+			 font-family: sans-serif;
+			 line-height: 18px;}
 
 #register-login-content
 {
@@ -127,13 +139,9 @@ form input:focus {outline-color: #ff8585}
 }
 
 /*Table*/
-table {margin-left: auto;
-	   margin-right: auto;
-	   width: 50%;
+table { width: 90%;
+		margin: 10px;
 		border-spacing: 0px}
-		
-
-	   
 	   
 th, td {padding: 3px;
 		margin: 0px;
@@ -148,6 +156,16 @@ td {border-bottom: 2px solid black;
 	border-collapse: collapse;}
 		
 th {color: white;}
+
+#column-1 {width: 33%;
+			 float: left;}
+			 
+			  
+#column-2 {width: 33%;
+			   float: left;}
+			 
+#column-3 {width: 33%;
+			  float: right;}
 	
 /* Misc classes*/
 .button {margin-bottom: 2px;
@@ -157,7 +175,7 @@ th {color: white;}
 		padding:6px 4px;  
 		text-align:center;  
 		border:1px solid #892525;  
-		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8);  
+		//text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.8);  
 		font-weight:bold;  
 		border-radius: 5px;  
 		text-decoration: none;  
@@ -176,7 +194,7 @@ th {color: white;}
 .left-column {float: left;}
 .right-column {float:right;}
 
-.indented-heading {margin-left: 200px;}
+.indented-heading {margin-left: 0px;}
 
 #user-photo
 {
@@ -189,6 +207,6 @@ th {color: white;}
 	list-style:none;
 	list-style-type:none;
 	display:inline;
-	margin-left:5px;
+	margin-left:0px;
 	font-size:85%;
 }

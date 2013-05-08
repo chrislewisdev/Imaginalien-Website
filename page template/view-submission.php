@@ -66,8 +66,6 @@
 		</div>
 	</div>
 		<div id="login">
-			<hr/>
-			<br/>
 			<?php
 				ob_start();
 				include 'login.php';
@@ -75,7 +73,6 @@
 				ob_end_clean();
 				echo $out;
 			?>
-			<br/>
 		</div>
 		<div id="content">
 			<div id="view-submission">
@@ -88,9 +85,10 @@
 					<?php
 					}
 				?>
-				<img id="user-photo" src="http://imaginalien.com/<?php echo $submission->image_url; ?>" /><br />
+				<img id="user-photo" src="http://dev.imaginalien.com/page-test/<?php echo $submission->image_url; ?>" /><br />
 				<?php echo $submission->caption; ?><br />
 				Submitted by: <?php echo get_user_name($submission->accountID); ?><br />
+				<?php echo $submission->image_url; ?>
 			</div>
 		</div>
 		<div id="footer">

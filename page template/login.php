@@ -1,8 +1,8 @@
+<br class="desktop-only"/>
 <form name="login" action="./sign-up.php" method="post" onsubmit="return validateLogin();">
 	<?php
 		require_once("account-functions.php");
 		require_once("theme-functions.php");
-
 		//Only output login/register buttons if user is logged in
 		if (!is_user_logged_in())
 		{

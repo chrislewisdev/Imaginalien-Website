@@ -1,7 +1,6 @@
 <?php 
 	session_start();
 	require_once("admin-functions.php"); 
-	
 	$targetDate = most_recent_weekday();
 	if (isset($_GET['date']))
 	{
@@ -46,8 +45,6 @@
 		</div>
 	</div>
 		<div id="login">
-			<hr/>
-			<br/>
 			<?php
 				ob_start();
 				include 'login.php';
@@ -55,7 +52,6 @@
 				ob_end_clean();
 				echo $out;
 			?>
-			<br/>
 		</div>
 		<div id="content">
 			<h1>Intel: <?php $dateObject = new DateTime($targetDate); echo $dateObject->format('D j M'); ?></h1>
@@ -68,7 +64,6 @@
 					<?php output_submissions(retrieve_submissions('A', $targetDate), 'view-submission.php'); ?>
 				</div>
 			</div>
-			
 		</div>
 		<div id="footer">
 			<?php

@@ -86,7 +86,6 @@
 			?>
 		</div>
 	</div>
-		<hr />
 		<div id="content">
 			<?php
 				//Display an error message if one is available

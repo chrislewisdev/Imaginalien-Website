@@ -1,8 +1,9 @@
-<a href="https://www.facebook.com/Imaginalien"><img src="images/facebookIcon.jpg" title="Imaginalien Facebook Page" alt="Facebook Page" width="100" height="38" id="facebook-icon"/></a>
+
 <br class="mobile-only"/>
 <ul>
+	<div id="nav-wrapper">
 	<li><a href="index.php" title="Home">Home</a></li>
-	<li><a href="instructions.php" title="Instructions">Instructions</a></li>
+	<li><a href="instructions.php" title="Instructions">How to play</a></li>
 	<li><a href="scoreboard.php" title="Scoreboards">Leaderboards</a></li>
 	<li><a href="gallery.php" title="Gallery">Gallery</a></li>
 	<?php
@@ -14,4 +15,7 @@
 		<?php
 		}
 	?>
+	
+	<li><a href="https://www.facebook.com/Imaginalien">Facebook</a></li>
+	</div>
 </ul>

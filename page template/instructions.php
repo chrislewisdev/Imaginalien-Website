@@ -33,8 +33,6 @@
 		</div>
 	</div>
 		<div id="login">
-			<hr/>
-			<br/>
 			<?php
 				ob_start();
 				include 'login.php';
@@ -42,28 +40,32 @@
 				ob_end_clean();
 				echo $out;
 			?>
-			<br/>
 		</div>
 		<div id="content">
-		<img src="images/Kodack.png" width="244" height="496" class="right-column desktop-only"/>
+		<img src="images/Nikonia.png" width="289" height="496" class="right-column desktop-only"/>
 			<h1>Instructions</h1>
-			Getting started with Imaginalien is simple:
+			<p>Getting started with Imaginalien is simple:</p>
 			
-			<ol>
-				<li>If you haven't already, <a href="./sign-up.php">create an account</a>.</li>
-				<li>Check the daily theme, either here or at the <a href="http://www.facebook.com/#!/Imaginalien">Imaginalien Facebook Page</a>.</li>
-				<li>Take photos of objects at Swinburne Hawthorn that fit the daily theme!</li>
-				<li><a href="./submit-photo.php">Submit your photos</a> on this website, from your mobile or PC.</li>
-				<li>Receive Points and climb the <a href="scoreboard.php">Scoreboards</a>!</li>
-			</ol>
+			<p><img src="images/info-1.jpg" width="200" height="200"/></p>
+			<p>1. If you haven't already, <a href="./sign-up.php">create an account</a>.</p>
+			<p>2. Check the daily mission on your mobile.</p>
 			
-			<h2>The Official Rules</h2>
-			<ol>
-				<li>Submitted photos must fit the daily theme: e.g. if the daily theme is 'L', the objects you choose must start with L!</li>
-				<li>The reward you get is determined by the length of the name of your object- so for example, 'Lamp' is worth 4 points, and 'Lecture' is worth 7.</li>
-				<li>However, words will be worth less if multiple people submit the same object. So try to be creative!</li>
-				<li>At the end of each day, scores will be tallied and announced; then you can check your new score and leaderboard position.</li>
-			</ol>
+			<hr/>
+			
+			<p><img src="images/info-2.jpg" width="200" height="200"/></p>
+			<p>3. Take up to 3 photos anywhere on the Swinburne campus that fit the daily mission!
+			   Be creative! Extra points are awarded to unique photos and points may be lost if the
+			   same object has been submitted multiple times</p>
+			   
+			<hr/>
+			
+			<p><img src="images/info-3.jpg" width="200" height="200"/></p>
+			<p>4. <a href="./submit-photo.php">Submit your photos</a> on this website, from your mobile or PC.</p>
+			<p>5. You will recieve your score at the end of the day. Climb the <a href="scoreboard.php">leaderboard</a> and 
+			   attempt to win <em>Minion of the Month</em>.</p>
+			 <p>To begin with, points will be awarded based on the length of your word (eg. 'computer' is worth 8, 'lamp' is worth 4).
+			 Although in later stages of the game you will face new challenges and may be 
+			 scored on different criteria (eg. No. of people in the photo).</p>
 		</div>
 		<div id="footer">
 			<?php

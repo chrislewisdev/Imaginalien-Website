@@ -33,8 +33,6 @@
 		</div>
 	</div>
 		<div id="login">
-			<hr/>
-			<br/>
 			<?php
 				ob_start();
 				include 'login.php';
@@ -42,7 +40,6 @@
 				ob_end_clean();
 				echo $out;
 			?>
-			<br/>
 		</div>
 		<div id="content">
 		

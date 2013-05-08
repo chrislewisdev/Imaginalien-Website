@@ -4,20 +4,7 @@
 	
 	if (isset($_POST['submit-photo']))
 	{
-		$success = false;
-		try
-		{
-			$imageURL = attemptSubmission();
-			$submissionsLeft = 3 -  checkSubmissionCount(get_user_id());
-			$responseHeading = "Your data has been received!";
-			$response = "I’ll get one of my slaves to look at it soon. Well done! Now go out and find more!<br />You have <strong>" . $submissionsLeft . "</strong> remaining today";
-			$success = true;
-		}
-		catch (Exception $e)
-		{
-			$responseHeading = "Sorry!";
-			$response = "There was a problem beaming your photo up to the mothership. Please try again!";
-		}
+		attemptSubmission();
 	}
 ?>
 <!DOCTYPE html>
@@ -54,8 +41,6 @@
 		</div>
 	</div>
 		<div id="login">
-			<hr/>
-			<br/>
 			<?php
 				ob_start();
 				include 'login.php';
@@ -63,21 +48,10 @@
 				ob_end_clean();
 				echo $out;
 			?>
-			<br/>
 		</div>
 		<div id="content">
-			<p><strong><?php echo $responseHeading; ?></strong></p> 
-			<p><?php echo $response; ?><p>
-			<?php
-				if ($success)
-				{
-				?>
-					<div id="view-submission">
-						<img id="user-photo" src="http://imaginalien.com/<?php echo $imageURL; ?>" /><br />
-					</div>
-				<?php
-				}
-			?>
+			<p><strong>Thanks for the intel!</strong></p> 
+			<p>You have <strong><?php echo 3 -  checkSubmissionCount(get_user_id()); ?></strong> photos remaining today.<p>
 		</div>
 		<div id="footer">
 			<?php

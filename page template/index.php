@@ -64,7 +64,7 @@
 				<hr/>
 					<p>Imaginalien is a photo-based game that will be played at Swinburne from the 6th to the 31st of May. 
 					All you need to play is a mobile phone with a camera and a keen imagination.</p>
-					<p><img src="images/barPics.jpg" width="600" height="100" class="desktop-only"/></p>
+					<p><img src="images/barPics.jpg" width="480" height="80" class="desktop-only"/></p>
 				<h3>How Do I Play?</h3>
 				<hr/>
 				<div id="left-info">

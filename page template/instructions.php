@@ -49,6 +49,9 @@
 			<p><img src="images/info-1.jpg" width="200" height="200"/></p>
 			<p>1. If you haven't already, <a href="./sign-up.php">create an account</a>.</p>
 			<p>2. Check the daily mission on your mobile.</p>
+			<p>If, for example, the mission is the letter 'A' you must take a photo of something starting with the 
+			letter A. If the mission was 'Red' you must take a photo of something red. If you don't 
+			achieve the mission your photo won't gain points.
 			
 			<hr/>
 			

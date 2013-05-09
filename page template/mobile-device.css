@@ -49,7 +49,7 @@ form input:not([type=submit]) {display:block;
 #register-side {margin-bottom: 10px;}
 #login-side {margin-top: 10px;} 
 
-.row-light {background-color: #373737;
+.row-light {
 		  padding-top: 5px;
 		  padding-bottom: 5px;}
 		  

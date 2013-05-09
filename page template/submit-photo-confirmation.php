@@ -4,7 +4,7 @@
 	
 	if (isset($_POST['submit-photo']))
 	{
-		attemptSubmission();
+		$url = attemptSubmission();
 	}
 ?>
 <!DOCTYPE html>
@@ -50,8 +50,23 @@
 			?>
 		</div>
 		<div id="content">
-			<p><strong>Thanks for the intel!</strong></p> 
+			<p><?php
+					$responses = array('Your data has been received, I’ll get one of my slaves to look at it soon. Well done! Now go out and find more!',
+								  'PATHETIC HUMAN! Well done! Your submission has been very useful to me. I will look over it later tonight, now get back out there!',
+								  'You seem to have grown in intelligence since you last bowed before me. I enjoyed your submission. I will give you your score tonight!',
+								  'Well done minion, you live to serve me another day! The slaves will rate your intel tonight!',
+								  'Thank you inferior humans, your submissions will assist me greatly! The slaves will review it later tonight');
+								
+					echo $responses[array_rand($responses, 1)];
+				?></p> 
 			<p>You have <strong><?php echo 3 -  checkSubmissionCount(get_user_id()); ?></strong> photos remaining today.<p>
+			<?php 
+
+			echo('<img src="');
+			echo $url;
+			echo('" class="center-column center-image"/>');
+			
+			?>
 		</div>
 		<div id="footer">
 			<?php

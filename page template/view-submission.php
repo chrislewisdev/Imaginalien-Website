@@ -85,7 +85,9 @@
 					<?php
 					}
 				?>
-				<img id="user-photo" src="http://imaginalien.com/<?php echo $submission->image_url; ?>" /><br />
+				<img id="user-photo" src="http://imaginalien.com/<?php echo $submission->image_url; ?>" class="desktop-only"/>
+				<img id="user-photo" src="http://imaginalien.com/<?php echo $submission->image_url; ?>" class="mobile-only" width="300" height="300"/>
+				<br />
 				<?php echo $submission->caption; ?><br />
 				Submitted by: <?php echo get_user_name($submission->accountID); ?><br />
 				<?php echo $submission->image_url; ?>

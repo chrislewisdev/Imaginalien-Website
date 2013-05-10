@@ -55,7 +55,7 @@
 								  'PATHETIC HUMAN! Well done! Your submission has been very useful to me. I will look over it later tonight, now get back out there!',
 								  'You seem to have grown in intelligence since you last bowed before me. I enjoyed your submission. I will give you your score tonight!',
 								  'Well done minion, you live to serve me another day! The slaves will rate your intel tonight!',
-								  'Thank you inferior humans, your submissions will assist me greatly! The slaves will review it later tonight');
+								  'Thank you inferior humans, your submissions will assist me greatly! The slaves will review it later tonight!');
 								
 					echo $responses[array_rand($responses, 1)];
 				?></p> 
@@ -64,7 +64,11 @@
 
 			echo('<img src="');
 			echo $url;
-			echo('" class="center-column center-image"/>');
+			echo('" class="center-column center-image desktop-only"/>');
+			
+			echo('<img src="');
+			echo $url;
+			echo('" class="center-column center-image mobile-only" width="300" height="300"');
 			
 			?>
 		</div>

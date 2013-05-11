@@ -42,37 +42,13 @@
 			?>
 		</div>
 		<div id="content">
-			<div id="column-1">
-				<h2>Daily Scores</h2>
-				<table>
-					<?php
-						require_once 'scoreboard-functions.php';
-						get_scoreboard_daily(10,null);
-					?>
-				</table>
-				<p><a href="scoreboard-daily.php" title="Daily Scoreboard">View all</a></p>
-			</div>
-			<div id="column-2">
-				<h2>Weekly Scores</h2>
-				<table>
-					<?php
-						require_once 'scoreboard-functions.php';
-						get_scoreboard_weekly(10,null);
-					?>
-				</table>
-				<p><a href="scoreboard-weekly.php" title="Weekly Scoreboard">View all</a></p>
-				<br/>
-			</div>
-			<div id="column-3">
-				<h2>Overall Scores</h2>
-				<table>
-					<?php
-						require_once 'scoreboard-functions.php';
-						get_scoreboard_overall(10);
-					?>
-				</table>
-				<p><a href="scoreboard-overall.php" title="Overall Scoreboard">View all</a></p>
-			</div>
+			<h2>Daily Scores</h2>
+			<table>
+				<?php
+					include 'scoreboard-functions.php';
+					get_scoreboard_daily(10,null);
+				?>
+			</table>
 		</div>
 		<div id="footer">
 			<?php

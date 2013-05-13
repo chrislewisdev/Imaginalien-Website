@@ -8,14 +8,15 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=320"/>
 		<title>Imaginalien</title>
-		<link rel="stylesheet" media="only screen and (max-width: 400px)" href="mobile-device.css"/>
-		<link rel="stylesheet" media="only screen and (min-width: 401px)" href="desktop.css"/>
+		<link rel="stylesheet" media="only screen and (max-device-width: 400px)" href="mobile-device.css"/>
+		<link rel="stylesheet" media="only screen and (min-device-width: 401px)" href="desktop.css"/>
 		<link rel="icon" type="image/ico" href="images/icon.ico"/>
 		<script type="text/javascript" src="validation.js"></script>
 		
 		<style type="text/css" media="only screen and (min-width: 401px)">#daily-theme {display: none;}</style>
 	</head>
 	<body>
+	<div id="fb-root"></div>
 	<div id="container">
 
 		<div id="header">
@@ -47,7 +48,7 @@
 			?>
 		</div>
 		<div id="content">
-			<iframe width="420" height="315" src="http://www.youtube.com/embed/WvEYV72h9ik" frameborder="0" allowfullscreen class="center-image desktop-only"></iframe>
+			<iframe width="756" height="567" src="http://www.youtube.com/embed/WvEYV72h9ik" frameborder="0" allowfullscreen class="center-image desktop-only"></iframe>
 			<iframe width="300" height="225" src="http://www.youtube.com/embed/WvEYV72h9ik" frameborder="0" allowfullscreen class="center-image mobile-only"></iframe>
 			<hr/>
 			<br/>
@@ -55,11 +56,24 @@
 				<p id="mission-pic"><img src="images/mission.jpg" width="200" height="200" title="Daily mission"/></p>
 				<p id="mission-text">'<?php echo get_daily_theme(); ?>'</p>
 				
-				<img src="images/photo-1.jpg" width="200" height="200"/>
-				<img src="images/photo-2.jpg" width="200" height="200"/>
-				<img src="images/photo-3.jpg" width="200" height="200"/>
+				<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2FImaginalien&amp;width=290&amp;height=395&amp;show_faces=false&amp;colorscheme=light&amp;stream=true&amp;border_color&amp;header=false" 
+				scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:290px; height:395px;" allowTransparency="true"></iframe>
 			</div>
 			<div id="left-column-home">
+				<h3>Current News</h3>
+				<hr/>
+				<p>
+				<!-- PUT NEWS HERE ************************************************************************************************ -->
+				Welcome to week 2 of Imaginalien!
+				</p>
+				<p>
+				Login, upload some photos and check out your current points now! Don't forget to check your place on the leaderboard
+				and the recently submitted photos.
+				</p>
+				<p>
+				Voting has commenced! Vote for top photos of last week, the winner will recieve bonus points. If you haven't already, please like the 
+				Facebook page at: <a href="https://www.facebook.com/Imaginalien">facebook.com/Imaginalien</a>.
+				</p>
 				<h3>What Is It?</h3>
 				<hr/>
 					<p>Imaginalien is a photo-based game that will be played at Swinburne from the 6th to the 31st of May. 

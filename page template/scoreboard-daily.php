@@ -5,8 +5,8 @@
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=320"/>
 		<title>Imaginalien</title>
-		<link rel="stylesheet" media="only screen and (max-width: 400px)" href="mobile-device.css"/>
-		<link rel="stylesheet" media="only screen and (min-width: 401px)" href="desktop.css"/>
+		<link rel="stylesheet" media="only screen and (max-device-width: 400px)" href="mobile-device.css"/>
+		<link rel="stylesheet" media="only screen and (min-device-width: 401px)" href="desktop.css"/>
 		<link rel="icon" type="image/ico" href="images/icon.ico"/>
 		<script type="text/javascript" src="validation.js"></script>
 	</head>

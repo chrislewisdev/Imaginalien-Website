@@ -229,6 +229,44 @@ function retrieve_submissions_for_user($id, $status, $date = null)
 	return $submissions;
 }
 
+/**
+ * Gets all photo submissions ordered by score, with an optional limit on the no. returned.
+ * @param $limit No. of entries to limit the query to.
+ * @return An array of SubmissionRecord objects.
+ */
+function retrieve_top_submissions($limit = 0)
+{
+	$connection = connect();
+	
+	//Since we have an optional date parameter, build up the query as a string before "preparing" it
+	$query = "SELECT * FROM ima_submissions ORDER BY score DESC";
+	if ($limit > 0)
+	{
+		$query .= "LIMIT 0, ?";
+	}
+	
+	//Retrieve all submissions from the database
+	$select = $connection->prepare($query);
+	if ($limit > 0)
+	{
+		$select->bind_param("i", $limit);
+	}
+	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
+	$select->execute();
+	$select->store_result();
+	
+	//Loop through all submissions and build up our list
+	$submissions = array();
+	while ($select->fetch())
+	{
+		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
+	}
+	
+	$connection->close();
+	
+	return $submissions;
+}
+
 /** 
  * Retrieves a single submission entry.
  * @param $id The database ID of the submission to retrieve.

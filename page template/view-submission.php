@@ -90,7 +90,6 @@
 				<br />
 				<?php echo $submission->caption; ?><br />
 				Submitted by: <?php echo get_user_name($submission->accountID); ?><br />
-				<?php echo $submission->image_url; ?>
 			</div>
 		</div>
 		<div id="footer">

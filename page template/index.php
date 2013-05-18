@@ -13,7 +13,9 @@
 		<link rel="icon" type="image/ico" href="images/icon.ico"/>
 		<script type="text/javascript" src="validation.js"></script>
 		
-		<style type="text/css" media="only screen and (min-width: 401px)">#daily-theme {display: none;}</style>
+		<style type="text/css" media="only screen and (min-device-width: 401px)">#daily-theme {display: none;}</style>
+		<style type="text/css" media="only screen and (max-device-width: 400px)">.submission {display: none;}</style>
+		
 	</head>
 	<body>
 	<div id="fb-root"></div>
@@ -64,21 +66,13 @@
 				<hr/>
 				<p>
 				<!-- PUT NEWS HERE ************************************************************************************************ -->
-				Welcome to week 2 of Imaginalien!
-				</p>
-				<p>
-				Login, upload some photos and check out your current points now! Don't forget to check your place on the leaderboard
-				and the recently submitted photos.
-				</p>
-				<p>
-				Voting has commenced! Vote for top photos of last week, the winner will recieve bonus points. If you haven't already, please like the 
-				Facebook page at: <a href="https://www.facebook.com/Imaginalien">facebook.com/Imaginalien</a>.
-				</p>
+				<p>Login, upload some photos and check out your current points now! Don't forget to check your place on the 
+				leaderboard and the recently submitted photos. </p>
 				<h3>What Is It?</h3>
 				<hr/>
 					<p>Imaginalien is a photo-based game that will be played at Swinburne from the 6th to the 31st of May. 
 					All you need to play is a mobile phone with a camera and a keen imagination.</p>
-					<p><img src="images/barPics.jpg" width="480" height="80" class="desktop-only"/></p>
+					<div><?php output_submissions(retrieve_top_submissions(5), 'view-submission.php', false) ?></div>
 				<h3>How Do I Play?</h3>
 				<hr/>
 				<div id="left-info">

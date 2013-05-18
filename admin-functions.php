@@ -242,7 +242,7 @@ function retrieve_top_submissions($limit = 0)
 	$query = "SELECT * FROM ima_submissions ORDER BY score DESC";
 	if ($limit > 0)
 	{
-		$query .= "LIMIT 0, ?";
+		$query .= " LIMIT 0, ?";
 	}
 	
 	//Retrieve all submissions from the database
@@ -302,9 +302,10 @@ function retrieve_submission($id)
  * Convenience function to output a set of div-contained submission thumbnails.
  * @param $submissions List of submissions to output (e.g. via retrieve_submissions)
  * @param $targetPage (Optional) a page to which to link each thumbnail, with a GET id of the submission ID
+ * @param $showLink (Optional) display name below the image
  * @return the no. of submissions that were output
  */
-function output_submissions($submissions, $targetPage = "")
+function output_submissions($submissions, $targetPage = "", $showName = true)
 {
 	//$submissions = retrieve_submissions($status, $date);
 				
@@ -321,7 +322,7 @@ function output_submissions($submissions, $targetPage = "")
 				}
 			?>
 			<img src="http://imaginalien.com/<?php echo $submission->image_url; ?>" width="100" height="100" border="0" /><br />
-			<?php echo $submission->caption; ?>
+			<?php if ($showName == true) echo $submission->caption; ?>
 			<?php 
 				if ($targetPage != "") 
 				{

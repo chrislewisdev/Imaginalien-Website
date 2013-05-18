@@ -217,3 +217,10 @@ th {color: white;}
 	margin-left:0px;
 	font-size:85%;
 }
+
+.submission
+{
+	float: left;
+	margin: 8px;
+}
+

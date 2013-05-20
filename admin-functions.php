@@ -26,8 +26,10 @@ class SubmissionRecord
 	public $status;
 	/** Misc. rejection note of this submission (only used in rejected entries). */
 	public $rejectionNote;
+	/** Bonus points field for the submission. */
+	public $bonusPoints;
 	
-	function __construct($_id, $_accountID, $_submit_time, $_image_url, $_score, $_caption, $_status, $_rejectionNote)
+	function __construct($_id, $_accountID, $_submit_time, $_image_url, $_score, $_caption, $_status, $_rejectionNote, $_bonusPoints)
 	{
 		$this->id = $_id;
 		$this->accountID = $_accountID;
@@ -37,6 +39,7 @@ class SubmissionRecord
 		$this->caption = $_caption;
 		$this->status = $_status;
 		$this->rejectionNote = $_rejectionNote;
+		$this->bonusPoints = $_bonusPoints;
 	}
 }
 
@@ -132,7 +135,7 @@ function end_moderation()
 	foreach ($approvedSubmissions as $submission)
 	{
 		//A caption's score is its length, minus the no. duplicated entries- with a minimum score of 1
-		$score = max(get_word_length($submission->caption) - $wordStats[$submission->caption] + 1, 1); // + Bonus Theme Points?
+		$score = max(get_word_length($submission->caption) - $wordStats[$submission->caption] + 1, 1) + $submission->bonusPoints; // + Bonus Theme Points?
 		//echo "Score for " . $submission->caption . ": " . $score . "<br />";
 		apply_approval($submission->id, $submission->accountID, $score);
 	}
@@ -145,7 +148,11 @@ function end_moderation()
 		apply_rejection($submission->id);
 	}
 	
-	set_moderation_status('N');
+	set_moderation_status('N'); //Code should at least run to this point.	
+	
+	require_once("../email_functions.php");
+	$approvedSubmissions = retrieve_submissions('A', get_recent_submitted_date());
+	massEmail($approvedSubmissions);
 }
 
 /**
@@ -175,7 +182,7 @@ function retrieve_submissions($status = 'P', $date = null)
 	{
 		$select->bind_param("s", $status);
 	}
-	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
+	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote, $dbBonusPoints);
 	$select->execute();
 	$select->store_result();
 	
@@ -183,7 +190,7 @@ function retrieve_submissions($status = 'P', $date = null)
 	$submissions = array();
 	while ($select->fetch())
 	{
-		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
+		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote, $dbBonusPoints);
 	}
 	
 	$connection->close();
@@ -213,7 +220,7 @@ function retrieve_submissions_for_user($id, $status, $date = null)
 		$select->bind_param("is", $id, $status);
 	}
 	
-	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
+	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote, $dbBonusPoints);
 	$select->execute();
 	$select->store_result();
 	
@@ -221,7 +228,7 @@ function retrieve_submissions_for_user($id, $status, $date = null)
 	$submissions = array();
 	while ($select->fetch())
 	{
-		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
+		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote, $dbBonusPoints);
 	}
 	
 	$connection->close();
@@ -251,7 +258,7 @@ function retrieve_top_submissions($limit = 0)
 	{
 		$select->bind_param("i", $limit);
 	}
-	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
+	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote, $dbBonusPoints);
 	$select->execute();
 	$select->store_result();
 	
@@ -259,7 +266,7 @@ function retrieve_top_submissions($limit = 0)
 	$submissions = array();
 	while ($select->fetch())
 	{
-		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
+		$submissions[] = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote, $dbBonusPoints);
 	}
 	
 	$connection->close();
@@ -279,7 +286,7 @@ function retrieve_submission($id)
 	//Retrieve the specified entry from the database
 	$select = $connection->prepare("SELECT * FROM ima_submissions WHERE id = ?");
 	$select->bind_param("i", $id);
-	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
+	$select->bind_result($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote, $dbBonusPoints);
 	$select->execute();
 	$select->store_result();
 	
@@ -291,7 +298,7 @@ function retrieve_submission($id)
 	
 	//Create the submission record object
 	$select->fetch();
-	$submission = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote);
+	$submission = new SubmissionRecord($dbID, $dbAccountID, $dbSubmitTime, $dbImageData, $dbScore, $dbCaption, $dbStatus, $dbRejectionNote, $dbBonusPoints);
 	
 	$connection->close();
 	
@@ -340,15 +347,16 @@ function output_submissions($submissions, $targetPage = "", $showName = true)
  * Stages a submission for approval- that is, takes a submission that is Undergoing Moderation and changes it to Approved pending Application
  * @param $id ID of the submission to approve.
  * @param $caption Final caption to set for the submission.
+ * @param $bonusPoints Value to set for the photo's bonus points
  * @return true if successful, false otherwise.
  */
-function stage_submission_approval($id, $caption)
+function stage_submission_approval($id, $caption, $bonusPoints)
 {
 	$connection = connect();
 	$status = 'UA';
 	
-	$update = $connection->prepare("UPDATE ima_submissions SET status = ?, caption = ? WHERE id = ?");
-	$update->bind_param("ssi", $status, $caption, $id);
+	$update = $connection->prepare("UPDATE ima_submissions SET status = ?, caption = ?, bonus_points = ? WHERE id = ?");
+	$update->bind_param("ssii", $status, $caption, $bonusPoints, $id);
 	$update->execute();
 	
 	if ($update->affected_rows == 0)
@@ -464,7 +472,7 @@ function generate_word_count_stats()
 	return $stats;
 }
 
-$IMAGINALIEN_LAUNCH_DATE = '2013-05-06';
+//$IMAGINALIEN_LAUNCH_DATE = '2013-05-06';
 /**
  * Returns a list of days on which the game was played between the two given dates.
  * @param $startDate (string, Y-m-d) Starting date for the game interval. Use $IMAGINALIEN_LAUNCH_DATE to get all days since the game started.

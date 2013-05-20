@@ -229,7 +229,7 @@ function get_user_email($id = -1)
 		}
 	}
 	
-	$account = retrieve_account('not needed', get_user_id());
+	$account = retrieve_account('not needed', $id);
 	
 	$decryptedEmail = $account->email;
 	
@@ -252,7 +252,7 @@ function get_user_score($id = -1)
 		}
 	}
 	
-	$account = retrieve_account('not needed', get_user_id());
+	$account = retrieve_account('not needed', $id);
 	
 	return $account->score;
 }

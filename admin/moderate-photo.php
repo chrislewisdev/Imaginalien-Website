@@ -20,17 +20,17 @@
 			//Retrieve the photo to edit by the ID passed via GET
 			$id = $_GET['id'];
 			
-			$submission = retrieve_submission($id);
-			
 			//If an approval/rejection is requested, process it
 			if (isset($_POST['approve']))
 			{
-				stage_submission_approval($_POST['id'], $_POST['final_caption']);
+				stage_submission_approval($_POST['id'], $_POST['final_caption'], $_POST['bonus_points']);
 			}
 			elseif (isset($_POST['reject']))
 			{
 				stage_submission_rejection($_POST['id'], $_POST['rejection_notes']);
 			}
+			
+			$submission = retrieve_submission($id);
 		?>
 		
 		<script type="text/javascript">
@@ -110,7 +110,7 @@
 					<img id="user-photo" src="http://imaginalien.com/<?php echo $submission->image_url; ?>" /><br />
 					Caption: <input type="text" id="caption" name="final_caption" value="<?php echo $submission->caption; ?>" onchange="updateCaptionScore();" /> <button type="button" onclick="googleIt();">Google It!</button> (apply word corrections if necessary)<br />
 					Score: <span id="word_score"><?php echo get_word_length($submission->caption); ?></span> (this is the score the player will get purely from their word)<br />
-					Bonus Points: <input type="text" name="bonus_points" value="0" /> (use this to add on points for extra challenges, e.g. Catch-up Challenges)<br />
+					Bonus Points: <input type="text" name="bonus_points" value="<?php echo $submission->bonusPoints; ?>" /> (use this to add on points for extra challenges, e.g. Catch-up Challenges)<br />
 					Submitted by <?php echo get_user_name($submission->accountID); ?><br />
 					Rejection Notes:<br />
 					<textarea name="rejection_notes" cols="40" rows="5"></textarea><br />

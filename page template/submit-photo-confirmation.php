@@ -1,6 +1,7 @@
 <?php 
 	session_start();
 	require_once("image_upload.php");
+	require_once("account-functions.php");
 	
 	if (isset($_POST['submit-photo']))
 	{
@@ -50,25 +51,52 @@
 			?>
 		</div>
 		<div id="content">
-			<p><?php
-					$responses = array('Your data has been received, I’ll get one of my slaves to look at it soon. Well done! Now go out and find more!',
-								  'PATHETIC HUMAN! Well done! Your submission has been very useful to me. I will look over it later tonight, now get back out there!',
+			<?php
+					$greeting = array('Thankyou, ', 'Well done, ', 'Thankyou minion ');
+					$response .= '<p>';
+					$response .= $greeting[array_rand($greeting, 1)];
+					$response .= get_user_name();
+					$response .= '. ';
+					
+					$mainText = array('Your data has been received, I will get one of my slaves to look at it soon.',
+								  'Your submission has been very useful to me. I will look over it later tonight.',
 								  'You seem to have grown in intelligence since you last bowed before me. I enjoyed your submission. I will give you your score tonight!',
-								  'Well done minion, you live to serve me another day! The slaves will rate your intel tonight!',
-								  'Thank you inferior humans, your submissions will assist me greatly! The slaves will review it later tonight!');
-								
-					echo $responses[array_rand($responses, 1)];
-				?></p> 
-			<p>You have <strong><?php echo 3 -  checkSubmissionCount(get_user_id()); ?></strong> photos remaining today.<p>
+								  'You live to serve me another day! The slaves will rate your intel tonight!',
+								  'Your submission will assist me greatly! The slaves will review it later tonight!');
+					$response .= $mainText[array_rand($mainText, 1)];
+					$response .= '</p><p>';
+					
+					$submissionCount = 3 - checkSubmissionCount(get_user_id());
+					if ($submissionCount == 0)
+					{
+						$response .= 'You have submitted all your photos for today! ';
+					}
+					else
+					{
+						$response .= 'You have ';
+						$response .= strval($submissionCount);
+						
+						if ($submissionCount == 1)
+							$response .= ' photo left for today. ';
+						else
+							$response .= ' photos left for today. ';
+					}
+					
+					$response .= 'Your score so far is ';
+					$response .= strval(get_user_score());
+					$response .= '.</p><p>Keep it up!</p>';
+					
+					echo $response;
+				?>
 			<?php 
 
-			echo('<img src="');
+			echo('<img id="user-photo" src="');
 			echo $url;
 			echo('" class="center-column center-image desktop-only"/>');
 			
-			echo('<img src="');
+			echo('<img id="user-photo" src="');
 			echo $url;
-			echo('" class="center-column center-image mobile-only" width="300" height="300"');
+			echo('" class="center-column center-image mobile-only"');
 			
 			?>
 		</div>

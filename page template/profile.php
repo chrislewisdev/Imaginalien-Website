@@ -78,11 +78,12 @@
 				<div class="submission-grid">
 					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'A'), 'view-submission.php'); ?>
 				</div>
-				
-				<h3>Rejected</h3>
-				<p>If any of your submissions are rejected by moderators, they will show up here. You can click on each submission to view it and see why it was rejected.</p>
-				<div class="submission-grid">
-					<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'R'), 'view-submission.php'); ?>
+				<div class="clear-column">
+					<h3>Rejected</h3>
+					<p>If any of your submissions are rejected by moderators, they will show up here. You can click on each submission to view it and see why it was rejected.</p>
+					<div class="submission-grid">
+						<?php output_submissions(retrieve_submissions_for_user(get_user_id(), 'R'), 'view-submission.php'); ?>
+					</div>
 				</div>
 			</div>
 		</div>

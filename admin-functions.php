@@ -132,11 +132,12 @@ function end_moderation()
 	$approvedSubmissions = retrieve_submissions('UA');
 	
 	//Loop through all approved submissions and process their approval, with their calculated score
-	foreach ($approvedSubmissions as $submission)
+	foreach ($approvedSubmissions as &$submission)
 	{
 		//A caption's score is its length, minus the no. duplicated entries- with a minimum score of 1
 		$score = max(get_word_length($submission->caption) - $wordStats[$submission->caption] + 1, 1) + $submission->bonusPoints; // + Bonus Theme Points?
 		//echo "Score for " . $submission->caption . ": " . $score . "<br />";
+		$submission->score = $score;
 		apply_approval($submission->id, $submission->accountID, $score);
 	}
 	
@@ -151,7 +152,7 @@ function end_moderation()
 	set_moderation_status('N'); //Code should at least run to this point.	
 	
 	require_once("../email_functions.php");
-	$approvedSubmissions = retrieve_submissions('A', get_recent_submitted_date());
+	//$approvedSubmissions = retrieve_submissions('A', get_recent_submitted_date());
 	massEmail($approvedSubmissions);
 }
 
